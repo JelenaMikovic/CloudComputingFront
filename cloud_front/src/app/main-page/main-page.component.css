@@ -38,6 +38,10 @@ img {
     transition: 0.5s filter;
 }
 
+.add {
+    object-fit: none;
+}
+
 h2 {
     position: absolute;
     top: 50%;
@@ -46,7 +50,6 @@ h2 {
     text-align: center;
     visibility: hidden;
     transform: translate(-50%, -100%);
-    z-index: 100;
     font-size: 2rem;
     font-family: "Poppins";
     font-weight: bold;
@@ -61,13 +64,12 @@ h2 {
     position: relative;
 }
 
-img:hover {
+.gallery_item:hover img{
     filter: brightness(0.6);
 }
 
-img:hover ~ h2 {
+.gallery_item:hover h2 {
     visibility: visible;
-    filter: brightness(1);
 }
 .gallery_item:first-of-type {
     grid-column: 2 / span 2;
