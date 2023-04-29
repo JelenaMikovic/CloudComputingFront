@@ -1,7 +1,7 @@
 html{
     background-color: #f9f9f9;
   }
-  
+
 body{
     font-family: "Poppins";
     font-weight: lighter;
@@ -11,7 +11,7 @@ body{
 
 .container{
     min-height: 100%;
-    width: 60%; 
+    width: 60%;
     margin: 0 auto;
     margin-top: 20vh;
 }
@@ -38,7 +38,7 @@ margin-right: 2vh;
 .mottos img{
     height: 25vh;
     display: block;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
 .sign-up{
