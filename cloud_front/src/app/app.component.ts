@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cloud_front';
+  // constructor(private authService: AuthService) {}
+
+  ngOnInit() : void {}
 }
