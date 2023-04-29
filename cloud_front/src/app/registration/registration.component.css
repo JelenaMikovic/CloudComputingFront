@@ -72,7 +72,7 @@ margin-right: 2vh;
 
 .input-box input:focus,
 .input-box input:valid{
-    border-color: #e0eb3e;
+    border-color: #ebda3e;
   }
 
  .button{
@@ -95,11 +95,15 @@ margin-right: 2vh;
   }
  .button input:hover{
    /* transform: scale(0.99); */
-   background:#e0eb3e;
+   background:#ebda3e;
    }
 
 .col-sm-6{
     padding-right: 0;
+}
+
+#date-input::-webkit-calendar-picker-indicator {
+  padding-right: 10px; /* Add padding to the right of the calendar icon */
 }
 
 /* .element {
