@@ -1,0 +1,132 @@
+html {
+    background-color: #f9f9f9;
+}
+
+hr {
+    width: 85%;
+    margin-bottom: 20px;
+}
+
+.title {
+    width: 85%;
+    padding-left: 2%;
+    font-family: "Poppins";
+    font-weight: lighter;
+    text-align: left;
+    letter-spacing: 5px;
+    font-size: 2.4rem;
+    margin: 1.5rem auto;
+}
+
+#gallery {
+    width: 85%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 133px);
+    grid-auto-rows: 200px;
+    justify-content: center;
+    gap: 1rem;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #ebebeb;
+    transition: 0.5s filter;
+}
+
+h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    visibility: hidden;
+    transform: translate(-50%, -100%);
+    z-index: 100;
+    font-size: 2rem;
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #f9f9f9;
+  }
+
+.gallery_item {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    grid-column: span 2;
+    height: 283px;
+    position: relative;
+}
+
+img:hover {
+    filter: brightness(0.6);
+}
+
+img:hover ~ h2 {
+    visibility: visible;
+    filter: brightness(1);
+}
+.gallery_item:first-of-type {
+    grid-column: 2 / span 2;
+}
+
+@media screen and (min-width: 270px) and (max-width: 504px) {
+    .gallery_item:first-of-type {
+        grid-column: 1 / span 2;
+    }
+
+    #gallery {
+        grid-auto-rows: 283px;
+    }
+}
+
+@media screen and (min-width: 505px) and (max-width: 714px) {
+    .gallery_item:nth-of-type(odd) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 715px) and (max-width: 889px) {
+    .gallery_item:nth-of-type(3n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 890px) and (max-width: 1065px) {
+    .gallery_item:nth-of-type(4n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1066px) and (max-width: 1240px) {
+    .gallery_item:nth-of-type(5n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1241px) and (max-width: 1464px) {
+    .gallery_item:nth-of-type(6n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1465px) and (max-width: 1590px) {
+    .gallery_item:nth-of-type(7n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1591px) and (max-width: 1790px){
+    .gallery_item:nth-of-type(8n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1791px) {
+    .gallery_item:nth-of-type(9n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
