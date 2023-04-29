@@ -1,1 +1,13 @@
-<p>navbar-registered works!</p>
+<div id = "navbar">
+    <span [routerLink]="['/login']" id = "logo">
+        <img title="DataHive" src="assets/logo.png" class="img-fluid">
+        <span id="name">DataHive</span>
+      </span>
+    <span id="navigation">
+      <ul>
+        <li><a id = "homeButton" [routerLink]="['/home']">HOME</a></li>
+        <li><a id = "logoutButton" [routerLink]="['/login']">LOGOUT</a></li>
+      </ul>
+    </span>
+</div>
+  
