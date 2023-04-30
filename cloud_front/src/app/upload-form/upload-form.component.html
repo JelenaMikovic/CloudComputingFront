@@ -7,12 +7,12 @@
             <mat-icon matSuffix>info</mat-icon>
         </mat-form-field>
         <mat-form-field>
-            <ngx-mat-file-input formControlName="basicfile" placeholder="Upload File" ></ngx-mat-file-input>
+            <ngx-mat-file-input formControlName="basicfile" placeholder="Upload File" (change)="onFileSelected($event)"></ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
         </mat-form-field>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button type="submit">Submit</button>
+    <button mat-button type="submit" (click)="uploadFile()">Submit</button>
     <button mat-button (click)="closeDialog()">Close</button>
 </mat-dialog-actions>
