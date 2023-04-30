@@ -15,6 +15,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatButtonModule} from '@angular/material/button';
     MainPageComponent,
     NavbarComponent,
     NavbarRegisteredComponent,
-    UploadFormComponent
+    UploadFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
