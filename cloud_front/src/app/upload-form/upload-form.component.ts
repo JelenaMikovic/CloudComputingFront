@@ -17,6 +17,8 @@ export class UploadFormComponent {
   onFileSelected(event: any) {
     // Get the selected file from the input event
     this.fileToUpload = event.target.files.item(0);
+    const file: File = event.target.files[0];
+    
   }
 
   uploadFile() {
@@ -24,10 +26,16 @@ export class UploadFormComponent {
     const formData = new FormData();
     if (this.fileToUpload != null) {
     formData.append('file', this.fileToUpload);
+    const type = this.fileToUpload.type;
+    const size = this.fileToUpload.size;
+    const lastModified = this.fileToUpload.lastModified;
+    const name = this.fileToUpload.name;
+
+    console.log(type, size, lastModified, name);
     }
 
     // Send the POST request to your Lambda function
-    this.awsService.uploadFile(this.fileToUpload).subscribe(
+    this.awsService.uploadFile(this.fileToUpload)?.subscribe(
       (response) => {
         console.log('File uploaded successfully');
         this.closeDialog();
