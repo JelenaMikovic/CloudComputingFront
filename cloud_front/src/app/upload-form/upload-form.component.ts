@@ -24,18 +24,21 @@ export class UploadFormComponent {
   uploadFile() {
     // Create a FormData object to send the file as the request body
     const formData = new FormData();
+    let type = "";
+    let size = 0;
+    let lastModified = 0;
+
     if (this.fileToUpload != null) {
     formData.append('file', this.fileToUpload);
-    const type = this.fileToUpload.type;
-    const size = this.fileToUpload.size;
-    const lastModified = this.fileToUpload.lastModified;
-    const name = this.fileToUpload.name;
+    type = this.fileToUpload.type;
+    size = this.fileToUpload.size;
+    lastModified = this.fileToUpload.lastModified;
 
     console.log(type, size, lastModified, name);
     }
 
     // Send the POST request to your Lambda function
-    this.awsService.uploadFile(this.fileToUpload)?.subscribe(
+    this.awsService.uploadFile(type, lastModified, size, this.fileToUpload)?.subscribe(
       (response) => {
         console.log('File uploaded successfully');
         this.closeDialog();
