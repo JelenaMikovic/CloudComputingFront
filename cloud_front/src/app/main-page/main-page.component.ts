@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AuthService } from '../service/auth/auth.service';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 
 @Component({
@@ -10,15 +9,18 @@ import { UploadFormComponent } from '../upload-form/upload-form.component';
 })
 export class MainPageComponent {
 
-  constructor(private matDialog: MatDialog) {}
+    constructor(private matDialog: MatDialog, 
+      ) {}
 
   ngOnInit() {}
 
   openUploadForm() {
     const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = "300px"; 
+      dialogConfig.width = "450px"; 
 
 
       const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
+
+      console.log(modalDialog);
   }
 }

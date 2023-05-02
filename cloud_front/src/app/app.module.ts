@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

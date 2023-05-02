@@ -12,7 +12,7 @@ export class AwsServiceService {
   constructor(private http: HttpClient) {}
 
 
-  public uploadFile(type: string, lastModified: number, size: number, file?: File) {
+  public uploadFile(type: string, lastModified: number, size: number, caption: string, file?: File) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
@@ -30,7 +30,8 @@ export class AwsServiceService {
               content: content.split(',')[1],
               type: type,
               lastModified: lastModified,
-              size: size
+              size: size,
+              caption: caption
             },
           };
           console.log(requestBody);

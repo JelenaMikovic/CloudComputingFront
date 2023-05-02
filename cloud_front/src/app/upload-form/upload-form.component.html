@@ -1,10 +1,9 @@
 <h1 mat-dialog-title>Add file</h1>
 <mat-dialog-content>
-    <form>
+    <form [formGroup]="uploadFileGroup">
         <mat-form-field>
             <mat-label>Caption</mat-label>
             <input matInput formControlName="caption" type="text" width="100%">
-            <mat-icon matSuffix>info</mat-icon>
         </mat-form-field>
         <mat-form-field>
             <ngx-mat-file-input formControlName="basicfile" placeholder="Upload File" (change)="onFileSelected($event)"></ngx-mat-file-input>
