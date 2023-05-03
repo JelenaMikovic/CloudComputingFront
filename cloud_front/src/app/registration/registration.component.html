@@ -1,4 +1,3 @@
-
 <div class="container">
     <div class="col-sm-6 mottos">
         <div class="row">
@@ -18,50 +17,71 @@
             <br>
             <p class="sign-up">Sign up for DataHive</p>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="input-box form">
-                    <span class="details">Fisrt name</span>
-                    <input type="text" placeholder="Bob" required>
+        <form (ngSubmit)="registerUser()" [formGroup]="registerForm">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">First name</span>
+                        <input type="text" placeholder="Bob" formControlName="firstName">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-box">
+                        <span class="details">Last name</span>
+                        <input type="text" placeholder="Ross" formControlName="lastName">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="row form">
                 <div class="input-box">
-                    <span class="details">Last name</span>
-                    <input type="text" placeholder="Ross" required>
+                    <span class="details">Birth date</span>
+                    <input type="date" formControlName="birthdate" placeholder="12.02.1988."  id="date-input" required>
                 </div>
             </div>
-        </div>
-        <div class="row form">
-            <div class="input-box">
-                <span class="details">Username</span>
-                <input type="text" placeholder="BobRoss1" required>
+            <div class="row form">
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    <input type="text" placeholder="BobRoss1" formControlName="username">
+                </div>
             </div>
-        </div>
-        <div class="row form">
-            <div class="input-box">
-                <span class="details">Email</span>
-                <input type="text" placeholder="bob@mail.com" required>
+            <div class="row form">
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    <input type="email" placeholder="bob@mail.com" formControlName="email" required>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">Password</span>
+                        <input type="password" placeholder="********" formControlName="password" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">Repeat password</span>
+                        <input type="password" placeholder="********" formControlName="repeatPassword" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="button">
+                    <input type="submit" value="Register">
+                </div>
+            </div>
+        </form>
+        <form (ngSubmit)="confirm()" [formGroup]="verificationCodeForm" *ngIf="showCode">
+            <div class="row" >
                 <div class="input-box form">
-                    <span class="details">Password</span>
-                    <input type="password" placeholder="********" required>
+                    <span class="details">Verification code:</span>
+                    <input type="text" placeholder="123456" formControlName="verificationCode" required>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="input-box form">
-                    <span class="details">Repeat password</span>
-                    <input type="password" placeholder="********" required>
+            <div class="row">
+                <div class="button" >
+                    <input type="submit" value="Verify">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="button">
-                <input type="submit" value="Register">
-                </div>
-        </div>
+        </form>
     </div>
 </div>
