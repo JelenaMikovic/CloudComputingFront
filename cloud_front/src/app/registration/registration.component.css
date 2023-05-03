@@ -72,11 +72,12 @@ margin-right: 2vh;
     border-color: #ebda3e;
   }
 
- .button{
+.button{
     height: 45px;
     margin: 15px auto;
     width: 60%;
   }
+  
 .button input{
     height: 100%;
     width: 100%;
