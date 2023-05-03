@@ -1,0 +1,14 @@
+
+cloud_front/amplify/backend/api/rest/cli-inputs.json
+cloud_front/amplify/backend/backend-config.json
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/amplify.state
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/cloudfront1bb5b46e-cloudformation-template.json
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/custom-policies.json
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/function-parameters.json
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/Pipfile
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/src/event.json
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/src/index.py
+cloud_front/amplify/backend/function/cloudfront1bb5b46e/src/setup.py
+cloud_front/amplify/team-provider-info.json
+cloud_front/amplify/backend/backend-config.json
+cloud_front/amplify/team-provider-info.json

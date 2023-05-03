@@ -34,19 +34,19 @@
       </div>
       <div class="row form">
         <div class="input-box">
-          <span class="details">Email</span>
-          <input type="text" placeholder="bobRoss1@gmail.com" required #email="ngModel" [(ngModel)]="user.email">
+          <span class="details">Username</span>
+          <input type="text" placeholder="bobRoss1" required id="username" #usernameInput="ngModel" [(ngModel)]="userName">
         </div>
       </div>
       <div class="row form">
         <div class="input-box">
           <span class="details">Password</span>
-          <input type="password" placeholder="********" required id="password" #password="ngModel" [(ngModel)]="user.password">
+          <input type="password" placeholder="********" required id="password" #passwordInput="ngModel" [(ngModel)]="password">
         </div>
       </div>
       <div class="row">
         <div class="button">
-          <input type="submit" value="Sign in" (click)="signIn()">
+          <input type="submit" value="Sign in" (click)="signInUser()">
         </div>
       </div>
     </div>

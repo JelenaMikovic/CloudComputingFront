@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { IUser, CognitoService } from '../cognito.service';
+
+import {Auth} from "aws-amplify";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,21 +10,30 @@ import { IUser, CognitoService } from '../cognito.service';
 })
 export class LoginComponent {
   loading: boolean;
-  user: IUser;
+  userName:String;
+  password:String;
 
-  constructor(private router: Router,
-              private cognitoService: CognitoService) {
+  constructor(private router: Router,) {
     this.loading = false;
-    this.user = {} as IUser;
+    this.userName = "";
+    this.password = ""
   }
 
-  public signIn(): void {
-    this.loading = true;
-    this.cognitoService.signIn(this.user)
-      .then(() => {
-        this.router.navigate(['/home']);
-      }).catch(() => {
-      this.loading = false;
-    });
+  async signIn() {
+    try {
+      let email = "karolina1";
+      let password = "Karolina1!";
+      await Auth.signIn(email, password);
+      console.log('User signed in successfully.');
+      alert('User signed in successfully.');
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      console.log('Error signing in:', error);
+      alert('Error signing in: ' + error.message);
+    }
+  }
+
+  signInUser() {
+    this.signIn();
   }
 }
