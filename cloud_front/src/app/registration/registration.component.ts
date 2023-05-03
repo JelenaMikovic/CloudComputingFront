@@ -82,7 +82,7 @@ export class RegistrationComponent {
       await Auth.confirmSignUp(username, verificationCode);
       console.log('User successfully verified');
       alert('User successfully verified');
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log('Error confirming sign up', error);
       alert('Error confirming sign up, try again');
