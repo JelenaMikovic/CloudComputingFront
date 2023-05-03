@@ -34,14 +34,14 @@
       </div>
       <div class="row form">
         <div class="input-box">
-          <span class="details">Username</span>
-          <input type="text" placeholder="BobRoss1" required>
+          <span class="details">Email</span>
+          <input type="text" placeholder="bobRoss1@gmail.com" required #email="ngModel" [(ngModel)]="user.email">
         </div>
       </div>
       <div class="row form">
         <div class="input-box">
           <span class="details">Password</span>
-          <input type="password" placeholder="********" required>
+          <input type="password" placeholder="********" required id="password" #password="ngModel" [(ngModel)]="user.password">
         </div>
       </div>
       <div class="row">
