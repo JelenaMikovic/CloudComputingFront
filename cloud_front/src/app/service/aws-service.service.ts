@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AwsServiceService {
 
-  private endpoint = 'https://pvmabp3qtkiv7kcrr2ahdhcj7u0nrjhc.lambda-url.eu-central-1.on.aws/';
+  private endpoint = 'https://y0xjo65rb1.execute-api.eu-central-1.amazonaws.com/dev/file';
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +36,7 @@ export class AwsServiceService {
           };
           console.log(requestBody);
           this.http
-            .post(this.endpoint, JSON.stringify(requestBody), { headers })
+            .post(this.endpoint, JSON.stringify(requestBody))
             .subscribe(
               (response) => {
                 observer.next(response);
