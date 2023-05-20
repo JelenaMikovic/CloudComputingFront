@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AwsServiceService } from '../service/aws-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar'; 
+import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-upload-form',
@@ -28,6 +30,46 @@ export class UploadFormComponent {
     ]),
   });
 
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: string[] = [];
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our tag
+    if (value) {
+      this.tags.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  edit(tag: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove tag if it no longer has a name
+    if (!value) {
+      this.remove(tag);
+      return;
+    }
+
+    // Edit existing tag
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags[index] = value;
+    }
+  }
+
   onFileSelected(event: any) {
     // Get the selected file from the input event
     this.fileToUpload = event.target.files.item(0);
@@ -48,12 +90,12 @@ export class UploadFormComponent {
         size = this.fileToUpload.size;
         lastModified = this.fileToUpload.lastModified;
 
-        console.log(type, size, lastModified, name);
+        console.log(type, size, lastModified, name, this.tags);
       }
 
       // Send the POST request to your Lambda function
       this.awsService
-        .uploadFile(type, lastModified, size, this.uploadFileGroup.value.caption, this.fileToUpload)
+        .uploadFile(type, lastModified, size, this.uploadFileGroup.value.caption, this.tags, this.fileToUpload)
         ?.subscribe(
           (response) => {
             console.log('File uploaded successfully');
