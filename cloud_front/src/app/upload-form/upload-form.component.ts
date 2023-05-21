@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar'; 
 import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { AuthService, IUser } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-upload-form',
@@ -12,12 +13,37 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
   styleUrls: ['./upload-form.component.css'],
 })
 export class UploadFormComponent {
+  loading: boolean;
+  user: IUser;
+  
   constructor(
-    public dialogRef: MatDialogRef<UploadFormComponent>,
+    private dialogRef: MatDialogRef<UploadFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public awsService: AwsServiceService, 
-    public snackBar: MatSnackBar
-  ) {}
+    private awsService: AwsServiceService, 
+    private snackBar: MatSnackBar,
+    private cognitoService: AuthService
+  ) {
+    this.loading = false;
+    this.user = {} as IUser;
+  }
+
+  public ngOnInit(): void {
+    this.cognitoService.getUser()
+    .then((user: any) => {
+      this.user = user.attributes;
+    });
+  }
+
+  public update(): void {
+    this.loading = true;
+
+    this.cognitoService.updateUser(this.user)
+    .then(() => {
+      this.loading = false;
+    }).catch(() => {
+      this.loading = false;
+    });
+  }
 
   fileToUpload?: File = undefined;
   uploadFileGroup: FormGroup = new FormGroup({

@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistrationComponent } from './registration/registration.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NavbarRegisteredComponent } from './navbar-registered/navbar-registered.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import {MatFormFieldModule} from '@angular/material/form-field'; 
@@ -26,7 +25,6 @@ import { MaterialModule } from './material.module';
     RegistrationComponent,
     MainPageComponent,
     NavbarComponent,
-    NavbarRegisteredComponent,
     UploadFormComponent,
     LoginComponent
   ],
