@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
 import { Amplify, Auth } from 'aws-amplify';
 import { environment } from 'src/environments/environment';
 
 export interface IUser {
   email: string;
   password: string;
-  showPassword: boolean;
+  token: string;
   code: string;
   name: string;
 }
@@ -26,7 +24,7 @@ export class AuthService {
     });
     this.authenticationSubject = new BehaviorSubject<boolean>(false);
     this.getUser().then((val) => {
-      console.log(val);
+      // console.log(val);
       if (val)
         this.authenticationSubject = new BehaviorSubject<boolean>(true);
     });
@@ -73,6 +71,19 @@ export class AuthService {
     .then((cognitoUser: any) => {
       return Auth.updateUserAttributes(cognitoUser, user);
     });
+  }
+
+  public getToken(): Promise<string> {
+    let jwt: string = '';
+    return Auth.currentSession().then(res=>{
+      let accessToken = res.getIdToken()
+      jwt = accessToken.getJwtToken()
+          
+      //You can print them to see the full objects
+      // console.log(`myAccessToken: ${JSON.stringify(accessToken)}`)
+      // console.log(`myJwt: ${jwt}`)
+      return jwt;
+    })
   }
   
 }

@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AwsServiceService {
+  private endpoint =
+    'https://78w51v1ay5.execute-api.eu-central-1.amazonaws.com/dev/file';
 
-  private endpoint = 'https://y0xjo65rb1.execute-api.eu-central-1.amazonaws.com/dev/file';
+  private jwt: string = '';
+  private headers = new HttpHeaders({Authorization: ''});
+  
+  constructor(private http: HttpClient, private cognitoService: AuthService) {}
 
-  constructor(private http: HttpClient) {}
-
-
-  public uploadFile(type: string, lastModified: number, size: number, caption: string, tags: string[], file?: File) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-
+  public uploadFile(
+    type: string,
+    lastModified: number,
+    size: number,
+    caption: string,
+    tags: string[],
+    file?: File
+  ) {
+    this.getToken();
+    
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -32,12 +39,11 @@ export class AwsServiceService {
               lastModified: lastModified,
               size: size,
               caption: caption,
-              tags: tags
+              tags: tags,
             },
           };
-          console.log(requestBody);
           this.http
-            .post(this.endpoint, JSON.stringify(requestBody))
+            .post(this.endpoint, JSON.stringify(requestBody), { headers: this.headers })
             .subscribe(
               (response) => {
                 observer.next(response);
@@ -50,5 +56,17 @@ export class AwsServiceService {
     } else {
       return new Observable();
     }
-}
+  }
+
+  private async getToken() {
+    await this.cognitoService.getToken().then((res) => {
+      console.log(res);
+      this.jwt = res;
+
+      console.log(this.jwt);
+      this.headers = new HttpHeaders({
+        Authorization: this.jwt,
+      });
+    });
+  }
 }

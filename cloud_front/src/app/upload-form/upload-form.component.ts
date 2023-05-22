@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AwsServiceService } from '../service/aws-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { AuthService, IUser } from '../service/auth/auth.service';
   templateUrl: './upload-form.component.html',
   styleUrls: ['./upload-form.component.css'],
 })
-export class UploadFormComponent {
+export class UploadFormComponent implements OnInit {
   loading: boolean;
   user: IUser;
   
