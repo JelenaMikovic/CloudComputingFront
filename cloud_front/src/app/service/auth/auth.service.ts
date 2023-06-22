@@ -31,8 +31,8 @@ export class AuthService {
     
   }
 
-  public signIn(email: string, password: string): Promise<any> {
-    return Auth.signIn(email, password)
+  public signIn(username: string, password: string): Promise<any> {
+    return Auth.signIn(username, password)
     .then(() => {
       this.authenticationSubject.next(true);
     });

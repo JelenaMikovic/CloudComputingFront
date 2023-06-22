@@ -1,57 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Registration</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-  <div class="container-login">
-    <div class="col-sm-6 welcome-back">
-      <div class="row">
-        <br>
-        <p class="motto">Welcome back to DataHive</p>
-      </div>
-      <div class="row">
-        <p class="message">You were missed! Welcome back and let's pick up right where we left off. First time visiting us?</p>
-        <a routerLink="/registration">Create account.</a>
-      </div>
-      <div class="row">
-        <img src="..\..\assets\logo.png">
-      </div>
+<div class="container-login">
+  <div class="col-sm-6 welcome-back">
+    <div class="row">
+      <br />
+      <p class="motto">Welcome back to DataHive</p>
     </div>
-    <div class="col-sm-6 line">
-      <div class="row form">
-        <br>
-        <p class="sign-in">Sign in</p>
-      </div>
+    <div class="row">
+      <p class="message">
+        You were missed! Welcome back and let's pick up right where we left off.
+        First time visiting us?
+      </p>
+      <a routerLink="/registration">Create account.</a>
+    </div>
+    <div class="row">
+      <img src="..\..\assets\logo.png" />
+    </div>
+  </div>
+  <div class="col-sm-6 line">
+    <div class="row form">
+      <br />
+      <p class="sign-in">Sign in</p>
+    </div>
+    <form (ngSubmit)="signInUser()" [formGroup]="loginForm">
       <div class="row form">
         <div class="input-box">
           <span class="details">Username</span>
-          <input type="text" placeholder="bobRoss1" required id="username" #usernameInput="ngModel" [(ngModel)]="userName">
+          <input
+            type="text"
+            placeholder="bobRoss1"
+            required
+            id="username"
+            formControlName="username"
+          />
         </div>
       </div>
       <div class="row form">
         <div class="input-box">
           <span class="details">Password</span>
-          <input type="password" placeholder="********" required id="password" #passwordInput="ngModel" [(ngModel)]="password">
+          <input
+            type="password"
+            placeholder="********"
+            required
+            id="password"
+            formControlName="password"
+          />
         </div>
       </div>
       <div class="row">
         <div class="button">
-          <input type="submit" value="Sign in" (click)="signInUser()">
+          <input type="submit" value="Sign in"/>
         </div>
       </div>
-    </div>
-
+    </form>
   </div>
-
-</body>
-</html>
+</div>

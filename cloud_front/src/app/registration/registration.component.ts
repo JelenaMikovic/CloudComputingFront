@@ -39,7 +39,6 @@ export class RegistrationComponent {
       if (!password) {
         throw new Error('Password is required.');
       }
-
       const user = await Auth.signUp({
         username,
         password,
@@ -82,7 +81,7 @@ export class RegistrationComponent {
       await Auth.confirmSignUp(username, verificationCode);
       console.log('User successfully verified');
       alert('User successfully verified');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     } catch (error) {
       console.log('Error confirming sign up', error);
       alert('Error confirming sign up, try again');
