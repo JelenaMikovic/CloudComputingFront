@@ -10,7 +10,7 @@
             <mat-icon matSuffix>folder</mat-icon>
         </mat-form-field>
         <mat-form-field class="example-chip-list" appearance="fill">
-          <mat-label>Favorite Fruits</mat-label>
+          <mat-label>Tags</mat-label>
           <mat-chip-grid #chipGrid aria-label="Enter tags">
             <mat-chip-row *ngFor="let tag of tags"
                           (removed)="remove(tag)"
