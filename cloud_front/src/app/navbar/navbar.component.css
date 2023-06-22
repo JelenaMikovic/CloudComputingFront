@@ -61,14 +61,21 @@ a:hover {
     line-height: 50px;
 }
 
+#homeButton {
+    color: #FFFFFF;
+}
+
+#logoutButton {
+    color: #fdc901;
+    cursor: pointer;
+}
+
 #loginButton {
     color: #FFFFFF;
-    /* border: 1px solid #FFFFFF; */
 }
 
 #registerButton {
     color: #fdc901;
-    /* border: 1px solid #fdc901; */
 }
 
 #logo {

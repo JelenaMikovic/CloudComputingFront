@@ -1,57 +1,89 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
+import { Amplify, Auth } from 'aws-amplify';
+import { environment } from 'src/environments/environment';
 
+export interface IUser {
+  email: string;
+  password: string;
+  token: string;
+  code: string;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    skip: 'true',
-  });
-  public get headers() {
-    return this._headers;
-  }
-  public set headers(value) {
-    this._headers = value;
-  }
+  public authenticationSubject: BehaviorSubject<any>;
 
-  user$ = new BehaviorSubject(null); //TODO
-  userState$ = this.user$.asObservable();
-
-  constructor(private http: HttpClient) {
-    this.user$.next(null);
+  constructor() {
+    Amplify.configure({
+      Auth: environment.cognito,
+    });
+    this.authenticationSubject = new BehaviorSubject<boolean>(false);
+    this.getUser().then((val) => {
+      // console.log(val);
+      if (val)
+        this.authenticationSubject = new BehaviorSubject<boolean>(true);
+    });
+    
   }
 
-  // login(auth: JwtAuthenticationRequest): Observable<TokenResponse> {
-  //   return this.http.post<TokenResponse>(environment.apiHost + '/api/user/login', auth, {
-  //     headers: this.headers,
-  //   });
-  // }
+  public signIn(email: string, password: string): Promise<any> {
+    return Auth.signIn(email, password)
+    .then(() => {
+      this.authenticationSubject.next(true);
+    });
+  }
 
-  getId(): any {
-    if (this.isLoggedIn()) {
-      const accessToken: any = localStorage.getItem('user');
-      const helper = new JwtHelperService();
-      const id = helper.decodeToken(accessToken).id;
-      return id;
+  public signOut(): Promise<any> {
+    return Auth.signOut()
+    .then(() => {
+      this.authenticationSubject.next(false);
+    });
+  }
+
+  public isAuthenticated(): Promise<boolean> {
+    if (this.authenticationSubject.value) {
+      return Promise.resolve(true);
+    } else {
+      return this.getUser()
+      .then((user: any) => {
+        if (user) {
+          return true;
+        } else {
+          return false;
+        }
+      }).catch(() => {
+        return false;
+      });
     }
-    return null;
   }
 
-  isLoggedIn(): boolean {
-    if (localStorage.getItem('user') != null) {
-      return true;
-    }
-    return false;
+  public getUser(): Promise<any> {
+    return Auth.currentUserInfo();
   }
 
-  setUser(): void {
-    this.user$.next(null); //TODO
+  public updateUser(user: IUser): Promise<any> {
+    return Auth.currentUserPoolUser()
+    .then((cognitoUser: any) => {
+      return Auth.updateUserAttributes(cognitoUser, user);
+    });
+  }
+
+  public getToken(): Promise<string> {
+    let jwt: string = '';
+    return Auth.currentSession().then(res=>{
+      let accessToken = res.getIdToken()
+      jwt = accessToken.getJwtToken()
+          
+      //You can print them to see the full objects
+      // console.log(`myAccessToken: ${JSON.stringify(accessToken)}`)
+      // console.log(`myJwt: ${jwt}`)
+      return jwt;
+    })
   }
   
 }

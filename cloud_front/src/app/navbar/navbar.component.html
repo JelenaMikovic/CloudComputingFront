@@ -5,8 +5,10 @@
       </span>
     <span id="navigation">
       <ul>
-        <li><a id = "loginButton" [routerLink]="['/login']">LOGIN</a></li>
-        <li><a id = "registerButton" [routerLink]="['/registration']">REGISTER</a></li>
+        <li><a id = "loginButton" routerLinkActive="active" [routerLink]="['/login']" *ngIf="!isAuthenticated()">LOGIN</a></li>
+            <li><a id = "registerButton" routerLinkActive="active" [routerLink]="['/registration']" *ngIf="!isAuthenticated()">REGISTER</a></li>
+            <li><a id = "homeButton" routerLinkActive="active" [routerLink]="['/home']" *ngIf="isAuthenticated()">HOME</a></li>
+            <li><a id = "logoutButton" [routerLink]="" (click)="signOut()" *ngIf="isAuthenticated()">LOGOUT</a></li>
       </ul>
     </span>
 </div>

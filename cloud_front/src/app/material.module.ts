@@ -21,6 +21,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -46,7 +47,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatSelectModule,
     MatRippleModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   exports: [
     MatButtonModule,
@@ -72,7 +73,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatSortModule,
     MatRippleModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatChipsModule
   ],
 })
 export class MaterialModule {}
