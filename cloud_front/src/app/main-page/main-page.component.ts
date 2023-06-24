@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ContextMenuModel } from '../interfaces/ContextMenuModel';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-main-page',
@@ -15,20 +16,20 @@ export class MainPageComponent {
   rightClickMenuItems: Array<ContextMenuModel> = [];
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
+  
+  constructor(private matDialog: MatDialog,
+  ) { }
 
-    constructor(private matDialog: MatDialog, 
-      ) {}
-
-  ngOnInit() {}
+  ngOnInit() { }
 
   openUploadForm() {
     const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = "450px"; 
+    dialogConfig.width = "450px";
 
 
-      const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
 
-      console.log(modalDialog);
+    console.log(modalDialog);
   }
 
   displayContextMenu(event: { clientX: number; clientY: number; }) {
