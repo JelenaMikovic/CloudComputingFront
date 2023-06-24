@@ -17,6 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MaterialModule } from './material.module';
     MainPageComponent,
     NavbarComponent,
     UploadFormComponent,
-    LoginComponent
+    LoginComponent,
+    ContextMenuComponent
   ],
   imports: [
     BrowserModule,
