@@ -1,0 +1,19 @@
+<div id="container">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <div class="header" >
+        <h1 class="title">Albums</h1>
+        <button mat-icon-button [matMenuTriggerFor]='menu'>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openUploadForm()">
+                <span>Add Album</span>
+            </button>
+        </mat-menu>
+    </div>
+    <hr>
+    <div class="button ribbon-outset border" *ngFor="let album of albums" (click)="openFolder(album)">
+        <img src="../../assets/bee.png" />
+        {{album}}
+    </div>
+</div>

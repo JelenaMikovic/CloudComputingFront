@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth/auth.service';
+import { FilesResponse } from '../model/files';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AwsServiceService {
   private endpoint =
-    'https://78w51v1ay5.execute-api.eu-central-1.amazonaws.com/dev/file';
+    'https://78w51v1ay5.execute-api.eu-central-1.amazonaws.com/dev/';
 
   private jwt: string = '';
   private headers = new HttpHeaders({Authorization: ''});
@@ -21,7 +22,8 @@ export class AwsServiceService {
     size: number,
     caption: string,
     tags: string[],
-    file?: File
+    file?: File,
+    foldername?: string
   ) {
     this.getToken();
     
@@ -40,10 +42,11 @@ export class AwsServiceService {
               size: size,
               caption: caption,
               tags: tags,
+              foldername: foldername
             },
           };
           this.http
-            .post(this.endpoint, JSON.stringify(requestBody), { headers: this.headers })
+            .post(this.endpoint + "file", JSON.stringify(requestBody), { headers: this.headers })
             .subscribe(
               (response) => {
                 observer.next(response);
@@ -68,5 +71,21 @@ export class AwsServiceService {
         Authorization: this.jwt,
       });
     });
+  }
+
+  public async getFiles(folderName: string): Promise<Observable<FilesResponse>> {
+    await this.getToken();
+    let path = folderName.replace(/\//g, "-");
+    return this.http.get<FilesResponse>(this.endpoint + "files/" + path  + "-", { headers: this.headers}).pipe();
+  }
+
+  public async getAlbums(folderName: string): Promise<Observable<any>> {
+    await this.getToken();
+    return this.http.get(this.endpoint + "album/" + folderName, { headers: this.headers });
+  }
+
+  public async createAlbum(folderName: string): Promise<Observable<any>> {
+    await this.getToken();
+    return this.http.post(this.endpoint + "album", {"foldername": folderName}, { headers: this.headers });
   }
 }

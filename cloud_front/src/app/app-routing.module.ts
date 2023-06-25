@@ -10,7 +10,21 @@ import { PreviewFileComponent } from './preview-file/preview-file.component';
 
 const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard] },
-  { path: 'home', component: MainPageComponent, canActivate: [NotLoggedInGuard] },
+  { path: 'all', component: MainPageComponent, canActivate: [NotLoggedInGuard], children: [
+    { path: '', component: MainPageComponent },
+    {
+      path: ':album', data: { breadcrumb: { skip: true } }, children: [
+        {
+          path: ':album', data: { breadcrumb: { skip: true } }, children: [
+            { path: ':album', component: MainPageComponent },
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }},
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }},
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }}
+            ]
+        }
+      ]
+    }]
+},
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]}, 
   { path: 'file', component: PreviewFileComponent},
   { path: '**', component: MainPageComponent, canActivate: [NotLoggedInGuard, LoginGuard]},
