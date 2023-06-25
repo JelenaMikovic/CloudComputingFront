@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add album</h1>
+<mat-dialog-content>
+    <form [formGroup]="createFolderGroup">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text" width="100%">
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-button type="submit" (click)="createFolder()">Create</button>
+</mat-dialog-actions>

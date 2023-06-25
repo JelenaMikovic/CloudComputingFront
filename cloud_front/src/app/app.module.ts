@@ -8,6 +8,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FoldersComponent } from './folders/folders.component';
 import { MatMenuModule } from '@angular/material/menu'; 
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
@@ -19,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { FolderFormComponent } from './folder-form/folder-form.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     NavbarComponent,
     UploadFormComponent,
     LoginComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    FoldersComponent,
+    FolderFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,96 @@
+* {
+    font-family: "Poppins";
+    font-weight: light;
+}
+
+#container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap; 
+    margin: auto;
+    width: 85%;
+}
+
+.title {
+    font-family: "Poppins";
+    font-weight: lighter;
+    text-align: left;
+    letter-spacing: 5px;
+    font-size: 2.4rem;
+    margin: 1rem;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-between;
+}
+hr {
+    width: 100%;
+    margin-top: 0;
+}
+
+.button {
+    position: relative;
+    display: block;
+    background: transparent;
+    width: 300px;
+    height: 80px;
+    line-height: 67px;
+    text-align: left;
+    font-size: 18px;
+    text-decoration: none;
+    color: #353535;
+    margin: auto;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+
+.button:before,
+.button:after {
+    position: absolute;
+    content: '';
+    width: 300px;
+    left: 0px;
+    height: 34px;
+    z-index: -1;
+}
+
+.button:before {
+    transform: perspective(15px) rotateX(3deg);
+}
+
+.button:after {
+    top: 35px;
+    transform: perspective(15px) rotateX(-3deg);
+}
+
+img {
+    height: 64px;
+    width: 70px;
+    margin-left: -10px;
+    margin-right: 20px;
+}
+
+/* Button Border Style */
+
+.button.border:before,
+.button.border:after {
+    border: 4px solid #ece0b7;
+}
+
+.button.border:before {
+    border-bottom: none;
+    /* to prevent the border-line showing up in the middle of the shape */
+}
+
+.button.border:after {
+    border-top: none;
+    /* to prevent the border-line showing up in the middle of the shape */
+}
+
+.button.border:hover {
+    cursor: pointer;   
+    filter: brightness(0.8);
+}

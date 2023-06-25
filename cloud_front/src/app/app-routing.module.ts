@@ -9,7 +9,21 @@ import { NotLoggedInGuard } from 'src/guard/NotLoggedInGuard';
 
 const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard] },
-  { path: 'home', component: MainPageComponent, canActivate: [NotLoggedInGuard] },
+  { path: 'all', component: MainPageComponent, canActivate: [NotLoggedInGuard], children: [
+    { path: '', component: MainPageComponent },
+    {
+      path: ':album', data: { breadcrumb: { skip: true } }, children: [
+        {
+          path: ':album', data: { breadcrumb: { skip: true } }, children: [
+            { path: ':album', component: MainPageComponent },
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }},
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }},
+            { path: ':album', component: MainPageComponent, data: { breadcrumb: { skip: true } }}
+            ]
+        }
+      ]
+    }]
+},
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]}, 
   { path: '**', component: MainPageComponent, canActivate: [NotLoggedInGuard, LoginGuard]},
   { path: '', component: MainPageComponent, pathMatch: 'full', canActivate: [NotLoggedInGuard, LoginGuard]}
