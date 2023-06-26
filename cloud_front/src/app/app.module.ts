@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { FolderFormComponent } from './folder-form/folder-form.component';
+import { PreviewFileComponent } from './preview-file/preview-file.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 
 @NgModule({
@@ -33,10 +35,12 @@ import { FolderFormComponent } from './folder-form/folder-form.component';
     LoginComponent,
     ContextMenuComponent,
     FoldersComponent,
-    FolderFormComponent
+    FolderFormComponent,
+    PreviewFileComponent
   ],
   imports: [
     BrowserModule,
+    NgxExtendedPdfViewerModule,
     AppRoutingModule,
     MatDialogModule,
     MatIconModule,
