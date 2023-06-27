@@ -100,7 +100,8 @@ export class AwsServiceService {
 
   public async deleteFile(file: File2): Promise<Observable<any>>  {
     await this.getToken();
-    return this.http.delete(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
+    let path = file.metadata.file.replace(/\//g, "-")
+    return this.http.delete(this.endpoint + 'file/' + path, { headers: this.headers });
   }
 
   public async editFile(caption: any, tags: string[], file_path: string): Promise<Observable<any>> {

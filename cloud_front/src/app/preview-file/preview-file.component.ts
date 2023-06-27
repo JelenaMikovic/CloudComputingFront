@@ -82,7 +82,7 @@ export class PreviewFileComponent implements OnInit {
         this.snackBar.open('File deleted successfully', 'Close', {
           duration: 3000
         });
-        // Refresh the file list or update UI as needed
+        this.router.navigate(['/all/' + this.file.metadata.file.split('/').slice(1, -1).join('/')]);
       },
       (error: any) => {
         console.error('Failed to delete file:', error);
