@@ -88,4 +88,10 @@ export class AwsServiceService {
     await this.getToken();
     return this.http.post(this.endpoint + "album", {"foldername": folderName}, { headers: this.headers });
   }
+
+  public async deleteAlbum(folderName: string): Promise<Observable<any>> {
+    await this.getToken();
+    let path = folderName.replace(/\//g, "-");
+    return this.http.delete(this.endpoint + "album/" + path, { headers: this.headers });
+  }
 }

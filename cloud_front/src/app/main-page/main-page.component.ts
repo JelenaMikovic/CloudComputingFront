@@ -46,7 +46,6 @@ export class MainPageComponent {
         // Call ngOnInit() when the NavigationEnd event occurs
         this.ngOnInit();
       }});
-    console.log(this.router.url.substring(1));
     let response = await this.service.getFiles(this.router.url.substring(1));
     response.subscribe({
       next: (res) => {
@@ -117,6 +116,18 @@ export class MainPageComponent {
       case this.rightClickMenuItems[1].menuEvent:
           console.log('To handle delete');
     }
+  }
+
+  async deleteAlbum() {
+    let response = await this.service.deleteAlbum(this.title);
+    response.subscribe({
+      next: (res) => {
+        this.ngOnInit();
+        this.router.navigate(['/', 'all']);
+      },
+      error: (error) => {
+      }
+    })
   }
 
   @HostListener('document:click')

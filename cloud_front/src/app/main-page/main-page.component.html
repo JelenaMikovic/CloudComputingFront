@@ -6,9 +6,15 @@
         <button mat-icon-button [matMenuTriggerFor]='menu'>
             <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #menu="matMenu" *ngIf="!allFiles">
-            <button mat-menu-item>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="title!=='all'" (click)="deleteAlbum()">
                 <span>Delete Album</span>
+            </button>
+            <button mat-menu-item >
+                <span>Share Album</span>
+            </button>
+            <button mat-menu-item>
+                <span>Download Album</span>
             </button>
         </mat-menu>
     </div>

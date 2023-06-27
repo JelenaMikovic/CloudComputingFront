@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AwsServiceService } from '../service/aws-service.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FolderFormComponent } from '../folder-form/folder-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ContextMenuModel } from '../interfaces/ContextMenuModel';
+import { F } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-folders',
@@ -14,6 +16,12 @@ export class FoldersComponent implements OnChanges{
   albums: string[] = [];
   menu:any;
   @Input() folder: string = "all";
+  
+  
+  isDisplayContextMenu: boolean = true;
+  rightClickMenuItems: Array<ContextMenuModel> = [];
+  rightClickMenuPositionX: number = 0;
+  rightClickMenuPositionY: number = 0;
   
   constructor(private matDialog: MatDialog, private service: AwsServiceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
   ngOnChanges(changes: SimpleChanges) {
@@ -54,5 +62,57 @@ export class FoldersComponent implements OnChanges{
 
   public openFolder(album: string) {
       this.router.navigate([this.router.url + "/" + album]);
+  }
+
+  displayContextMenu(event: { clientX: number; clientY: number; }, album: string) {
+
+    this.isDisplayContextMenu = true;
+
+    this.rightClickMenuItems = [
+      {
+        menuText: 'Delete',
+        menuEvent: album,
+      },
+    ];
+
+    this.rightClickMenuPositionX = event.clientX;
+    this.rightClickMenuPositionY = event.clientY;
+
+  }
+
+  getRightClickMenuStyle() {
+    return {
+      position: 'fixed',
+      left: `${this.rightClickMenuPositionX}px`,
+      top: `${this.rightClickMenuPositionY}px`
+    }
+  }
+
+  handleMenuItemClick(event: { data: any; }) {
+    switch (event.data) {
+      case this.rightClickMenuItems[0].menuEvent:
+        {
+          this.deleteAlbum(this.router.url + "/" + this.rightClickMenuItems[0].menuEvent);
+          break;
+        }
+    }
+  }
+
+  async deleteAlbum(folder:string) {
+    console.log(folder);
+    let response = await this.service.deleteAlbum(folder.substring(5));
+    response.subscribe({
+      next: (res) => {
+        this.ngOnInit();
+        this.router.navigate(['/', 'all']);
+      },
+      error: (error) => {
+      }
+    })
+  }
+
+  @HostListener('document:click')
+  documentClick(): void {
+    this.isDisplayContextMenu = false;
   }
 }
