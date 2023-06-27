@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { ShareFormComponent } from './share-form/share-form.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     NavbarComponent,
     UploadFormComponent,
     LoginComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    ShareFormComponent
   ],
   imports: [
     BrowserModule,

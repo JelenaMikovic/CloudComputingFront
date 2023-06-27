@@ -33,10 +33,16 @@ export class AuthService {
 
   public signIn(username: string, password: string): Promise<any> {
     return Auth.signIn(username, password)
-    .then(() => {
-      this.authenticationSubject.next(true);
-    });
+      .then(user => {
+        this.authenticationSubject.next({ success: true, user });
+        return user;
+      })
+      .catch(error => {
+        this.authenticationSubject.next({ success: false, error });
+        throw error;
+      });
   }
+  
 
   public signOut(): Promise<any> {
     return Auth.signOut()
@@ -85,5 +91,31 @@ export class AuthService {
       return jwt;
     })
   }
+
+  public changePassword(oldPassword:string, newPassword: string, user:any): any {
+    Auth.currentAuthenticatedUser()
+      .then(res => {
+        return Auth.changePassword(user, oldPassword, newPassword);
+      })
+      .then(() => {
+        console.log('Password changed successfully.');
+        return true;
+        // Perform any additional actions after password change
+      })
+      .catch(error => {
+        console.error('Error changing password:', error);
+        return false;
+        // Handle error scenario
+      });
+  }
+  // public changePassword(username: string, oldPassword: string, newPassword: string): Promise<any> {
+  //   return Auth.signIn(username, oldPassword)
+  //     .then(() => {
+  //       return Auth.forgotPassword(username);
+  //     })
+  //     .then(() => {
+  //       return Auth.forgotPasswordSubmit(username, verificationCode, newPassword);
+  //     });
+  // }
   
 }

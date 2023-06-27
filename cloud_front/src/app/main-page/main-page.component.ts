@@ -2,11 +2,12 @@ import { Component, HostListener } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ContextMenuModel } from '../interfaces/ContextMenuModel';
+import { ShareFormComponent } from '../share-form/share-form.component';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent {
   title = 'context-menu';
@@ -16,23 +17,20 @@ export class MainPageComponent {
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
 
-    constructor(private matDialog: MatDialog, 
-      ) {}
+  constructor(private matDialog: MatDialog) {}
 
   ngOnInit() {}
 
   openUploadForm() {
     const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = "450px"; 
+    dialogConfig.width = '450px';
 
+    const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
 
-      const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
-
-      console.log(modalDialog);
+    console.log(modalDialog);
   }
 
-  displayContextMenu(event: { clientX: number; clientY: number; }) {
-
+  displayContextMenu(event: { clientX: number; clientY: number }) {
     this.isDisplayContextMenu = true;
 
     this.rightClickMenuItems = [
@@ -48,29 +46,37 @@ export class MainPageComponent {
 
     this.rightClickMenuPositionX = event.clientX;
     this.rightClickMenuPositionY = event.clientY;
-
   }
 
   getRightClickMenuStyle() {
     return {
       position: 'fixed',
       left: `${this.rightClickMenuPositionX}px`,
-      top: `${this.rightClickMenuPositionY}px`
-    }
+      top: `${this.rightClickMenuPositionY}px`,
+    };
   }
 
-  handleMenuItemClick(event: { data: any; }) {
+  handleMenuItemClick(event: { data: any }) {
     switch (event.data) {
       case this.rightClickMenuItems[0].menuEvent:
-           console.log('To handle share');
-           break;
+        this.openShareForm();
+        break;
       case this.rightClickMenuItems[1].menuEvent:
-          console.log('To handle delete');
+        console.log('To handle delete');
     }
   }
 
   @HostListener('document:click')
   documentClick(): void {
     this.isDisplayContextMenu = false;
+  }
+
+  openShareForm() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '450px';
+
+    const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
+
+    console.log(modalDialog);
   }
 }
