@@ -23,6 +23,7 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MainPageComponent,
     NavbarComponent,
     UploadFormComponent,
+    EditFormComponent,
     LoginComponent,
     ContextMenuComponent,
     FoldersComponent,

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AwsServiceService } from '../service/aws-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar'; 
@@ -9,6 +9,7 @@ import { AuthService, IUser } from '../service/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { File } from '../model/files';
+import { EditFormComponent } from '../edit-form/edit-form.component';
 
 @Component({
   selector: 'app-upload-form',
@@ -20,7 +21,7 @@ export class PreviewFileComponent implements OnInit {
   
   file!: File;
 
-  constructor(private router: Router, private awsService: AwsServiceService, 
+  constructor(private matDialog: MatDialog, private router: Router, private awsService: AwsServiceService, 
     private snackBar: MatSnackBar,) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
@@ -91,4 +92,13 @@ export class PreviewFileComponent implements OnInit {
       }
     );
     }
+  
+  editFile(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "450px";
+    dialogConfig.data = {
+      file: this.file
+    };
+    const modalDialog = this.matDialog.open(EditFormComponent, dialogConfig);
+  }
 }
