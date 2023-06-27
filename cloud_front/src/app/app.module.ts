@@ -20,14 +20,11 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
-<<<<<<< HEAD
 import { ShareFormComponent } from './share-form/share-form.component';
-=======
 import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { EditFormComponent } from './edit-form/edit-form.component';
->>>>>>> origin/develop
 
 
 @NgModule({
@@ -40,13 +37,10 @@ import { EditFormComponent } from './edit-form/edit-form.component';
     EditFormComponent,
     LoginComponent,
     ContextMenuComponent,
-<<<<<<< HEAD
-    ShareFormComponent
-=======
+    ShareFormComponent,
     FoldersComponent,
     FolderFormComponent,
     PreviewFileComponent
->>>>>>> origin/develop
   ],
   imports: [
     BrowserModule,
