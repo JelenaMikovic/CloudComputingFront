@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<div class="container">
+    <div class="col-sm-8">
+        <div class="row">
+            <!-- Image -->
+            <ng-container *ngIf="file.metadata.type.split('/')[0] === 'image'">
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 40px;">
+                    <img [src]="getBase64(file.content, file.metadata.type)" alt="Image" style="max-width: 700px; max-height: 500px;">
+                </div>
+            </ng-container>
+            
+            <!-- PDF -->
+            <ng-container *ngIf="file.metadata.type === 'application/pdf'">
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 40px;">
+                  <embed id="pdfEmbed" style="width: 100%; height: 500px;">
+                </div>
+              </ng-container>
+            
+            <!-- Text -->
+            <ng-container *ngIf="file.metadata.type.split('/')[1] === 'plain'">
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 40px;">
+                    <ngx-extended-pdf-viewer [src]="getBase64(file.content.substr(2, file.content.length - 3), file.metadata.type)"></ngx-extended-pdf-viewer>
+                </div>
+            </ng-container>
+            
+            <!-- Video -->
+            <ng-container *ngIf="file.metadata.type.split('/')[0] === 'video'">
+                <video controls>
+                <source [src]="getBase64(file.content, file.metadata.type)" type="video/mp4">
+                </video>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="details">
+            <div class="row">
+                <h1 class="motto col-sm-8" >Details</h1>
+                <div class="dropdown">
+                    <button class="back"><a class="butt col-sm-1" title="Menu" data-toggle="tooltip"><i class="material-icons">&#xe5d4;</i></a></button>
+                    <div class="dropdown-content">
+                        <a href="#" class="butt" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i> Edit</a>
+                        <a class="butt" title="Delete" data-toggle="tooltip"><i class="material-icons" (click)="deleteFile()">&#xE872;</i> Delete</a>
+                        <a href="#" class="butt" title="Download" data-toggle="tooltip"><i class="material-icons">&#xf090;</i> Download</a>
+                        <a href="#" class="butt" title="Share" data-toggle="tooltip"><i class="material-icons">&#xe80d;</i> Share</a>
+                        <a href="#" class="butt" title="Move file" data-toggle="tooltip"><i class="material-icons">&#xe675;</i> Move file</a>
+                    </div>
+                  </div>
+                
+            </div>
+            <div class="row"><hr/></div>
+            <div class="row" >
+                <h1 class="col-sm-6 general">General info</h1>
+                <hr class="col-sm-4 devider" />
+            </div>
+            <div class="row">
+                <p class="col-sm-5">Name:</p>
+                <p class="col-sm-6">{{file.metadata.file.split('/').pop()}}</p>
+            </div> 
+            <div class="row">
+                <p class="col-sm-5">Type:</p>
+                <p class="col-sm-6">{{file.metadata.type}}</p>
+            </div> 
+            <div class="row">
+                <p class="col-sm-5">Size:</p>
+                <p class="col-sm-6">{{file.metadata.size}}</p>
+            </div> 
+            <div class="row">
+                <p class="col-sm-5">Folder:</p>
+                <p class="col-sm-6">{{ (file.metadata.file.split('/').slice(1, -1).join('/') || 'All files') }}</p>
+            </div> 
+            <div class="row">
+                <p class="col-sm-5">Last modifed:</p>
+                <p class="col-sm-6">{{file.metadata.lastModified}}</p>
+            </div> 
+            <div class="row" >
+                <h1 class="col-sm-4 general">Sharing</h1>
+                <hr class="col-sm-6 devider" />
+            </div>
+            <div class="row">
+                <p class="col-sm-5">Owner:</p>
+                <p class="col-sm-6">You</p>
+            </div> 
+            <div class="row">
+                <p class="col-sm-5">View:</p>
+                <p class="col-sm-6">Noa</p>
+            </div>
+            <div class="row" >
+                <h1 class="col-sm-4 general">Tags</h1>
+                <hr class="col-sm-6 devider" />
+            </div>
+            <div class="row">
+                <p class="col-sm-12">{{file.metadata.tags.join(', ')}}</p>
+            </div>
+            <div class="row" >
+                <h1 class="col-sm-4 general">Caption</h1>
+                <hr class="col-sm-6 devider" />
+            </div>
+            <div class="row">
+                <p class="col-sm-12">{{file.metadata.caption}}</p>
+            </div>
+        </div>
+    </div>
+</div>

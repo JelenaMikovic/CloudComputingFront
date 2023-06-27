@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { FilesResponse } from '../model/files';
+import { File as File2 } from '../model/files';
 
 @Injectable({
   providedIn: 'root',
@@ -89,9 +90,15 @@ export class AwsServiceService {
     return this.http.post(this.endpoint + "album", {"foldername": folderName}, { headers: this.headers });
   }
 
+
   public async deleteAlbum(folderName: string): Promise<Observable<any>> {
     await this.getToken();
     let path = folderName.replace(/\//g, "-");
     return this.http.delete(this.endpoint + "album/" + path, { headers: this.headers });
+  }
+
+  public async deleteFile(file: File2): Promise<Observable<any>>  {
+    await this.getToken();
+    return this.http.delete(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }
 }

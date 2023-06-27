@@ -144,6 +144,10 @@ export class MainPageComponent {
     });
   }
 
+  openFileDetails(file: any) {
+    this.router.navigate(['/file'], { state: { file } });
+  }
+
   @HostListener('document:click')
   documentClick(): void {
     this.isDisplayContextMenu = false;

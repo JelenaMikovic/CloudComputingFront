@@ -5,6 +5,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from 'src/guard/LoginGuard';
 import { NotLoggedInGuard } from 'src/guard/NotLoggedInGuard';
+import { PreviewFileComponent } from './preview-file/preview-file.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
     }]
 },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard]}, 
+  { path: 'file', component: PreviewFileComponent},
   { path: '**', component: MainPageComponent, canActivate: [NotLoggedInGuard, LoginGuard]},
   { path: '', component: MainPageComponent, pathMatch: 'full', canActivate: [NotLoggedInGuard, LoginGuard]}
 ];
