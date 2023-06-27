@@ -33,7 +33,7 @@ export class LoginComponent {
       console.log(res);
       console.log('User signed in successfully.');
       // alert('User signed in successfully.');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/all']);
     } catch (error: any) {
       console.log('Error signing in:', error);
       alert('Error signing in: ' + error.message);

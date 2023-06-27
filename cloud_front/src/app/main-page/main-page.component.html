@@ -1,48 +1,34 @@
+
 <div class="container">
-    <h1 class="title">All Files</h1>
+    <app-folders [folder]="title" *ngIf="title!=='Shared'"></app-folders>
+    <div class="header">
+        <h1 class="title">{{fileTitle}}</h1>
+        <button mat-icon-button [matMenuTriggerFor]='menu'>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="title!=='all'" (click)="deleteAlbum()">
+                <span>Delete Album</span>
+            </button>
+            <button mat-menu-item >
+                <span>Share Album</span>
+            </button>
+            <button mat-menu-item>
+                <span>Download Album</span>
+            </button>
+        </mat-menu>
+    </div>
     <hr>
     <div id="gallery">
         <div class="gallery_item" (click)="openUploadForm()">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO3byUoDQRRA0ezirP/g9HkOIILDQvDrVNw4G8FPMIIuw5U2DQ5E7YaOlXp9D2STTV5f3qIDVZ2OJEmSpPCAaWAq9RwhAUvAMfDIhwfgCFhMPV8IwPq3wN8VwddSz5k1YA7o8bc7YDb1vNkCdqluJ/W82QLOa4Q+Sz1vtoDXGqFfUs+bLWpKPW+2MLShQ8GNNnQouNGGDgU32tCh4EYbOhTcaEOHghtt6FBwow0dCm60oUPBjTZ0KLjRhg6Ftm50cb4N2C5OBQHPtE+/fPatsZ31K05sAtepn3SCXAEr4zjVaeTRp1ibO58NHI74EQ0dNBm6OOyt0XpNRe4Cgx9+RLy36Ro6l9DlVle53tBWvUYil6EPUj/NBNtr+vWueG/UV7fAQmOhy9grxv7iAlhuNPKn2DPAJnBa/h1tmz5wAmwULTpRUFPqebOFoQ0dCm60oUPBjTZ0KLjRhg4FN9rQoeBGGzoU3GhDh4IbbehQcKMNHQputKFDwY02dCi40f8Wul+j9dM/jRUPw4s5VZ2knjdbDG+AVbWRet7cr9tdVYh8GeosXArAKnDzS+TrsZ3qbBtgHtgvbx4Mys99+d186vlCYnh5qZk7I5IkSZI6k+wNJgs9CuOiKBgAAAAASUVORK5CYII=" class="add"/>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO3byUoDQRRA0ezirP/g9HkOIILDQvDrVNw4G8FPMIIuw5U2DQ5E7YaOlXp9D2STTV5f3qIDVZ2OJEmSpPCAaWAq9RwhAUvAMfDIhwfgCFhMPV8IwPq3wN8VwddSz5k1YA7o8bc7YDb1vNkCdqluJ/W82QLOa4Q+Sz1vtoDXGqFfUs+bLWpKPW+2MLShQ8GNNnQouNGGDgU32tCh4EYbOhTcaEOHghtt6FBwow0dCm60oUPBjTZ0KLjRhg6Ftm50cb4N2C5OBQHPtE+/fPatsZ31K05sAtepn3SCXAEr4zjVaeTRp1ibO58NHI74EQ0dNBm6OOyt0XpNRe4Cgx9+RLy36Ro6l9DlVle53tBWvUYil6EPUj/NBNtr+vWueG/UV7fAQmOhy9grxv7iAlhuNPKn2DPAJnBa/h1tmz5wAmwULTpRUFPqebOFoQ0dCm60oUPBjTZ0KLjRhg4FN9rQoeBGGzoU3GhDh4IbbehQcKMNHQputKFDwY02dCi40f8Wul+j9dM/jRUPw4s5VZ2knjdbDG+AVbWRet7cr9tdVYh8GeosXArAKnDzS+TrsZ3qbBtgHtgvbx4Mys99+d186vlCYnh5qZk7I5IkSZI6k+wNJgs9CuOiKBgAAAAASUVORK5CYII="
+                class="add" />
         </div>
-        <div class="gallery_item" (contextmenu)="displayContextMenu($event); false">
-            <img src="assets/logo.png"/>
-            <h2>Naziv fajla</h2>
-            
+        <div class="gallery_item" *ngFor="let file of files" (contextmenu)="displayContextMenu($event); false" (click)="openFileDetails(file)">
+            <img [src]="file.icon"/>
+            <h2>{{file.metadata.file.split("/").pop()}}</h2>
         </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
-        <div class="gallery_item">
-            <img src="assets/logo.png"/>
-        </div>
+
         <app-context-menu
         *ngIf="rightClickMenuItems.length > 0 && isDisplayContextMenu"
         [ngStyle]="getRightClickMenuStyle()"

@@ -14,4 +14,10 @@ export class AppComponent implements OnInit {
 
   }
 
+  public signOut(): void {
+    // this.cognitoService.signOut()
+    //   .then(() => {
+    //     this.router.navigate(['/login']);
+    //   });
+  }
 }

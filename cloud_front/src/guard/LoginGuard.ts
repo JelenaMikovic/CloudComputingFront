@@ -26,7 +26,7 @@ export class LoginGuard {
         console.log(res);
         
       if(res){
-        this.router.navigate(['home']);
+        this.router.navigate(['/all']);
         return false;
       }
       return true;

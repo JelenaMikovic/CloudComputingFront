@@ -6,6 +6,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService, IUser } from '../service/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-form',
@@ -21,13 +22,17 @@ export class UploadFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private awsService: AwsServiceService, 
     private snackBar: MatSnackBar,
-    private cognitoService: AuthService
+    private cognitoService: AuthService,
+    private Router: Router
   ) {
     this.loading = false;
     this.user = {} as IUser;
   }
 
+  foldername: string = "";
+
   public ngOnInit(): void {
+    this.foldername = this.Router.url.split("all")[1].substring(1);
     this.cognitoService.getUser()
     .then((user: any) => {
       this.user = user.attributes;
@@ -63,12 +68,10 @@ export class UploadFormComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our tag
     if (value) {
       this.tags.push(value);
     }
 
-    // Clear the input value
     event.chipInput!.clear();
   }
 
@@ -83,13 +86,11 @@ export class UploadFormComponent implements OnInit {
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove tag if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
-    // Edit existing tag
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;
@@ -121,7 +122,7 @@ export class UploadFormComponent implements OnInit {
 
       // Send the POST request to your Lambda function
       this.awsService
-        .uploadFile(type, lastModified, size, this.uploadFileGroup.value.caption, this.tags, this.fileToUpload)
+        .uploadFile(type, lastModified, size, this.uploadFileGroup.value.caption, this.tags, this.fileToUpload, this.foldername)
         ?.subscribe(
           (response) => {
             console.log('File uploaded successfully');
