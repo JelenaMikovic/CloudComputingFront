@@ -11,19 +11,19 @@ import { F } from '@angular/cdk/keycodes';
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.css']
 })
-export class FoldersComponent implements OnChanges{
-  
+export class FoldersComponent implements OnChanges {
+
   albums: string[] = [];
-  menu:any;
+  menu: any;
   @Input() folder: string = "all";
-  
-  
+
+
   isDisplayContextMenu: boolean = true;
   rightClickMenuItems: Array<ContextMenuModel> = [];
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
-  
-  constructor(private matDialog: MatDialog, private service: AwsServiceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
+
+  constructor(private matDialog: MatDialog, private service: AwsServiceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
   ngOnChanges(changes: SimpleChanges) {
     // Check if the 'reloadTrigger' input property has changed
     if (changes['folder']) {
@@ -31,17 +31,19 @@ export class FoldersComponent implements OnChanges{
       this.ngOnInit(); // Optionally, you can call ngOnInit() to rerun the initialization logic
     }
   }
-  async ngOnInit() { 
-    
-    let response = await this.service.getAlbums(this.folder);
-    response.subscribe({
-      next: (res) => {
-        this.albums=res;
-        console.log(res);
-      },
-      error: (error) => {
-      }
-    })
+  async ngOnInit() {
+    console.log(this.folder);
+    if (this.folder != "Shared") {
+      let response = await this.service.getAlbums(this.folder);
+      response.subscribe({
+        next: (res) => {
+          this.albums = res;
+          console.log(res);
+        },
+        error: (error) => {
+        }
+      })
+    }
   }
 
   public openUploadForm() {
@@ -53,15 +55,15 @@ export class FoldersComponent implements OnChanges{
     modalDialog.afterClosed().subscribe((result) => {
       console.log(result);
       if (result) {
-        this.albums.push(result);   
-        console.log(this.albums); 
+        this.albums.push(result);
+        console.log(this.albums);
         this.cdr.detectChanges();
       }
     });
   }
 
   public openFolder(album: string) {
-      this.router.navigate([this.router.url + "/" + album]);
+    this.router.navigate([this.router.url + "/" + album]);
   }
 
   displayContextMenu(event: { clientX: number; clientY: number; }, album: string) {
@@ -98,7 +100,7 @@ export class FoldersComponent implements OnChanges{
     }
   }
 
-  async deleteAlbum(folder:string) {
+  async deleteAlbum(folder: string) {
     console.log(folder);
     let response = await this.service.deleteAlbum(folder.substring(5));
     response.subscribe({

@@ -1,6 +1,6 @@
 
 <div class="container">
-    <app-folders [folder]="title"></app-folders>
+    <app-folders [folder]="title" *ngIf="title!=='Shared'"></app-folders>
     <div class="header">
         <h1 class="title">{{fileTitle}}</h1>
         <button mat-icon-button [matMenuTriggerFor]='menu'>

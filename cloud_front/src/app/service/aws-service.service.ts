@@ -76,7 +76,7 @@ export class AwsServiceService {
   public async getFiles(folderName: string): Promise<Observable<FilesResponse>> {
     await this.getToken();
     let path = folderName.replace(/\//g, "-");
-    return this.http.get<FilesResponse>(this.endpoint + "files/" + path  + "-", { headers: this.headers}).pipe();
+    return this.http.get<FilesResponse>(this.endpoint + "files/" + path, { headers: this.headers}).pipe();
   }
 
   public async getAlbums(folderName: string): Promise<Observable<any>> {
