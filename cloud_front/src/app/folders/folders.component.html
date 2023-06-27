@@ -12,8 +12,18 @@
         </mat-menu>
     </div>
     <hr>
-    <div class="button ribbon-outset border" *ngFor="let album of albums" (click)="openFolder(album)">
-        <img src="../../assets/bee.png" />
+    <div class="button ribbon-outset border" (contextmenu)="displayContextMenu($event, album); false" *ngFor="let album of albums" (click)="openFolder(album)">
+        <img src="../../assets/bee.png"/>
         {{album}}
     </div>
+    <div class="button ribbon-outset border" (click)="openFolder('Shared')">
+        <img src="../../assets/bee.png"/>
+        Shared
+    </div>
+    <app-context-menu
+    *ngIf="rightClickMenuItems.length > 0 && isDisplayContextMenu"
+    [ngStyle]="getRightClickMenuStyle()"
+    [contextMenuItems]="rightClickMenuItems"
+    (onContextMenuItemClick)="handleMenuItemClick($event)"
+  ></app-context-menu>
 </div>

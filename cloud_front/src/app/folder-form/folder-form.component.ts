@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AwsServiceService } from '../service/aws-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContextMenuModel } from '../interfaces/ContextMenuModel';
 
 @Component({
   selector: 'app-folder-form',
@@ -10,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./folder-form.component.css']
 })
 export class FolderFormComponent implements OnInit {
+  
   constructor(
     private dialogRef: MatDialogRef<FolderFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,4 +53,5 @@ export class FolderFormComponent implements OnInit {
         this.dialogRef.close();
       }
     }
+
 }

@@ -33,7 +33,6 @@ export class UploadFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.foldername = this.Router.url.split("all")[1].substring(1);
-    console.log(this.foldername);
     this.cognitoService.getUser()
     .then((user: any) => {
       this.user = user.attributes;
@@ -69,12 +68,10 @@ export class UploadFormComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our tag
     if (value) {
       this.tags.push(value);
     }
 
-    // Clear the input value
     event.chipInput!.clear();
   }
 
@@ -89,13 +86,11 @@ export class UploadFormComponent implements OnInit {
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove tag if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
-    // Edit existing tag
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;
