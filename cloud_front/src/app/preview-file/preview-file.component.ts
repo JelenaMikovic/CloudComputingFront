@@ -20,7 +20,8 @@ export class PreviewFileComponent implements OnInit {
   
   file!: File;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private awsService: AwsServiceService, 
+    private snackBar: MatSnackBar,) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
       this.file = navigation.extras.state['file'];
@@ -70,4 +71,24 @@ export class PreviewFileComponent implements OnInit {
     return decodedString;
   }
 
+  async deleteFile() {
+    this.snackBar.open('File deleted dsadadasdasd', 'Close', {
+      duration: 3000
+    });
+    (await this.awsService.deleteFile(this.file)).subscribe(
+      (response: any) => {
+        console.log('File deleted successfully');
+        this.snackBar.open('File deleted successfully', 'Close', {
+          duration: 3000
+        });
+        // Refresh the file list or update UI as needed
+      },
+      (error: any) => {
+        console.error('Failed to delete file:', error);
+        this.snackBar.open('Failed to delete file', 'Close', {
+          duration: 3000
+        });
+      }
+    );
+    }
 }
