@@ -26,6 +26,7 @@ export class PreviewFileComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    console.log("FILEPATH:" + this.file.metadata.file);
     if (this.file.metadata.type === 'application/pdf') {
       this.showPDF(this.file.content.substr(2, this.file.content.length - 3), this.file.metadata.type);
     }
@@ -49,6 +50,9 @@ export class PreviewFileComponent implements OnInit {
   openMoveForm() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "450px";
+    dialogConfig.data = {
+      file: this.file
+    };
     const modalDialog = this.matDialog.open(MoveFileComponent, dialogConfig);
   }
 
@@ -97,12 +101,13 @@ export class PreviewFileComponent implements OnInit {
 
 
     async downloadFile(){
-      this.snackBar.open('File downloaded KLSLJSSJ', 'Close', {
-        duration: 3000
-      });
+      // this.snackBar.open('File downloaded KLSLJSSJ', 'Close', {
+      //   duration: 3000
+      // });
+      console.log("Pozvan download");
       (await this.awsService.downloadFile(this.file)).subscribe(
         (response: DownloadFile) => {
-          console.log(response);
+          console.log("REsponse:" + response);
           console.log('Uso u preuzimanje');
           const url = response.url;
           const link = document.createElement('a');

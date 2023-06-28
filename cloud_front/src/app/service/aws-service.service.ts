@@ -114,10 +114,10 @@ export class AwsServiceService {
     return this.http.put(this.endpoint + 'file/', requestBody, { headers: this.headers });
   }
 
-  public async registerByInvite(requestBody: any): Promise<Observable<any>> {    
+  public async registerByInvite(requestBody: any): Promise<Observable<any>> {
     return this.http.post(this.endpoint + 'register-by-invite/', requestBody);
   }
-  
+
   public async moveFile(move: string, file_path: string): Promise<Observable<any>> {
     await this.getToken();
     const requestBody = {
@@ -128,6 +128,7 @@ export class AwsServiceService {
   }
 
   public async downloadFile(file: File2): Promise<Observable<any>>  {
+    console.log("POZVAN DOWNLOAD IZ AWS SERVISA")
     await this.getToken();
     return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }

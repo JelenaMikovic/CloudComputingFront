@@ -30,6 +30,8 @@ export class MoveFileComponent implements OnInit{
     this.file = data.file;
   }
 
+  addOnBlur = true;
+
   moveFileGroup: FormGroup = new FormGroup({
     caption: new FormControl('', [
     ])
@@ -38,7 +40,14 @@ export class MoveFileComponent implements OnInit{
     this.dialogRef.close('Pizza!');
   }
 
-  ngOnInit(): void {
+  foldername: string = "";
+  public ngOnInit(): void {
+    this.foldername = this.file.metadata.file.split('/').slice(1, -1).join('/');
+    console.log("NAPRAVLJEN JE MOVE FILE DIALOG");
+    this.cognitoService.getUser()
+      .then((user: any) => {
+        this.user = user.attributes;
+      });
   }
 
   async changeFilePath() {
@@ -54,7 +63,7 @@ export class MoveFileComponent implements OnInit{
       res.subscribe(
         (response) => {
           console.log('File path changed successfully');
-          this.closeDialog();
+          //this.closeDialog();
           this.snackBar.open('File path changed successfully!', "", { duration: 2000 });
           //this.router.navigate(['/all/' + newFilePath.split('/').slice(1, -1).join('/')]);
         },
