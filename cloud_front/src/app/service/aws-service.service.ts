@@ -131,4 +131,9 @@ export class AwsServiceService {
     await this.getToken();
     return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }
+
+  public async processInvite(path: string): Promise<Observable<any>>  {
+    await this.getToken();
+    return this.http.put(this.endpoint + 'invite/' + path, { headers: this.headers });
+  }
 }
