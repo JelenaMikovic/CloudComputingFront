@@ -24,6 +24,8 @@ import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import {MoveFileComponent} from "./move-file/move-file.component";
+import { EditFormComponent } from './edit-form/edit-form.component';
+
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import {MoveFileComponent} from "./move-file/move-file.component";
     MainPageComponent,
     NavbarComponent,
     UploadFormComponent,
+    EditFormComponent,
     LoginComponent,
     ContextMenuComponent,
     FoldersComponent,

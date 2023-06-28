@@ -7,18 +7,21 @@ import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService, IUser } from '../service/auth/auth.service';
 import { Router } from '@angular/router';
+import { File as File2} from '../model/files'
 
 @Component({
-  selector: 'app-upload-form',
-  templateUrl: './upload-form.component.html',
-  styleUrls: ['./upload-form.component.css'],
+  selector: 'app-edit-form',
+  templateUrl: './edit-form.component.html',
+  styleUrls: ['./edit-form.component.css'],
 })
-export class UploadFormComponent implements OnInit {
+export class EditFormComponent implements OnInit {
   loading: boolean;
   user: IUser;
   
-  constructor(
-    private dialogRef: MatDialogRef<UploadFormComponent>,
+  file!: File2;
+
+  constructor(private router: Router,
+    private dialogRef: MatDialogRef<EditFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private awsService: AwsServiceService, 
     private snackBar: MatSnackBar,
@@ -27,12 +30,14 @@ export class UploadFormComponent implements OnInit {
   ) {
     this.loading = false;
     this.user = {} as IUser;
+    this.file = data.file;
   }
 
   foldername: string = "";
 
   public ngOnInit(): void {
-    this.foldername = this.Router.url.split("all")[1].substring(1);
+    this.foldername = this.file.metadata.file.split('/').slice(1, -1).join('/');
+    console.log(this.foldername);
     this.cognitoService.getUser()
     .then((user: any) => {
       this.user = user.attributes;
@@ -53,12 +58,7 @@ export class UploadFormComponent implements OnInit {
   fileToUpload?: File = undefined;
   uploadFileGroup: FormGroup = new FormGroup({
     caption: new FormControl('', [
-      Validators.required,
-      Validators.minLength(1),
-    ]),
-    basicfile: new FormControl('', [
-      Validators.required,
-    ]),
+    ])
   });
 
   addOnBlur = true;
@@ -68,10 +68,12 @@ export class UploadFormComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
+    // Add our tag
     if (value) {
       this.tags.push(value);
     }
 
+    // Clear the input value
     event.chipInput!.clear();
   }
 
@@ -86,51 +88,49 @@ export class UploadFormComponent implements OnInit {
   edit(tag: string, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
+    // Remove tag if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
 
+    // Edit existing tag
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags[index] = value;
     }
   }
 
-  onFileSelected(event: any) {
-    // Get the selected file from the input event
-    this.fileToUpload = event.target.files.item(0);
-    const file: File = event.target.files[0];
-  }
-
-  uploadFile() {
+  async uploadFile() {
     if (this.uploadFileGroup.valid) {
       // Create a FormData object to send the file as the request body
       const formData = new FormData();
-      let type = '';
-      let size = 0;
-      let lastModified = 0;
 
-      if (this.fileToUpload != null) {
-        formData.append('file', this.fileToUpload);
-        type = this.fileToUpload.type;
-        size = this.fileToUpload.size;
-        lastModified = this.fileToUpload.lastModified;
-
-        console.log(type, size, lastModified, name, this.tags);
+      let caption = this.uploadFileGroup.value.caption
+      if(caption.trim == "")
+      {
+        caption = this.file.metadata.caption
       }
+      let tags = this.tags
+      if(tags.length === 0)
+      {
+        tags = this.file.metadata.tags
+      }
+      
 
       // Send the POST request to your Lambda function
-      this.awsService
-        .uploadFile(type, lastModified, size, this.uploadFileGroup.value.caption, this.tags, this.fileToUpload, this.foldername)
-        ?.subscribe(
+      const res = await this.awsService
+        .editFile(caption, tags, this.file.metadata.file);
+
+        res.subscribe(
           (response) => {
-            console.log('File uploaded successfully');
+            console.log('File changed successfully');
             this.closeDialog();
-            this.snackBar.open('File uploaded successfully!', "", {duration: 2000});
+            this.snackBar.open('File changed successfully!', "", {duration: 2000});
+            this.router.navigate(['/all/' + this.file.metadata.file.split('/').slice(1, -1).join('/')]);
           },
           (error) => {
-            console.log('Error uploading file:', error);
+            console.log('Error changing file:', error);
           }
         );
     }

@@ -9,6 +9,7 @@ import { File as File2 } from '../model/files';
   providedIn: 'root',
 })
 export class AwsServiceService {
+
   private endpoint =
     'https://78w51v1ay5.execute-api.eu-central-1.amazonaws.com/dev/';
 
@@ -77,7 +78,7 @@ export class AwsServiceService {
   public async getFiles(folderName: string): Promise<Observable<FilesResponse>> {
     await this.getToken();
     let path = folderName.replace(/\//g, "-");
-    return this.http.get<FilesResponse>(this.endpoint + "files/" + path  + "-", { headers: this.headers}).pipe();
+    return this.http.get<FilesResponse>(this.endpoint + "files/" + path, { headers: this.headers}).pipe();
   }
 
   public async getAlbums(folderName: string): Promise<Observable<any>> {
@@ -90,9 +91,27 @@ export class AwsServiceService {
     return this.http.post(this.endpoint + "album", {"foldername": folderName}, { headers: this.headers });
   }
 
+
+  public async deleteAlbum(folderName: string): Promise<Observable<any>> {
+    await this.getToken();
+    let path = folderName.replace(/\//g, "-");
+    return this.http.delete(this.endpoint + "album/" + path, { headers: this.headers });
+  }
+
   public async deleteFile(file: File2): Promise<Observable<any>>  {
     await this.getToken();
-    return this.http.delete(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
+    let path = file.metadata.file.replace(/\//g, "-")
+    return this.http.delete(this.endpoint + 'file/' + path, { headers: this.headers });
+  }
+
+  public async editFile(caption: any, tags: string[], file_path: string): Promise<Observable<any>> {
+    await this.getToken();
+    const requestBody = {
+      file_path: file_path,
+      caption: caption,
+      tags: tags
+    };
+    return this.http.put(this.endpoint + 'file/', requestBody, { headers: this.headers });
   }
 
   public async downloadFile(file: File2): Promise<Observable<any>>  {
