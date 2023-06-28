@@ -15,7 +15,7 @@ export class AwsServiceService {
 
   private jwt: string = '';
   private headers = new HttpHeaders({Authorization: ''});
-  
+
   constructor(private http: HttpClient, private cognitoService: AuthService) {}
 
   public uploadFile(
@@ -28,7 +28,7 @@ export class AwsServiceService {
     foldername?: string
   ) {
     this.getToken();
-    
+
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -116,5 +116,19 @@ export class AwsServiceService {
 
   public async registerByInvite(requestBody: any): Promise<Observable<any>> {    
     return this.http.post(this.endpoint + 'register-by-invite/', requestBody);
+  }
+  
+  public async moveFile(move: string, file_path: string): Promise<Observable<any>> {
+    await this.getToken();
+    const requestBody = {
+      old_file_path: file_path,
+      new_file_path: move,
+    };
+    return this.http.put(this.endpoint + 'file/' + file_path, requestBody, {headers: this.headers});
+  }
+
+  public async downloadFile(file: File2): Promise<Observable<any>>  {
+    await this.getToken();
+    return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }
 }
