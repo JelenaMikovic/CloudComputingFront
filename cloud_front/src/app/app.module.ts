@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatIconModule } from '@angular/material/icon'; 
+import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,9 +9,9 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FoldersComponent } from './folders/folders.component';
-import { MatMenuModule } from '@angular/material/menu'; 
+import { MatMenuModule } from '@angular/material/menu';
 import { UploadFormComponent } from './upload-form/upload-form.component';
-import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +24,9 @@ import { ShareFormComponent } from './share-form/share-form.component';
 import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import {MoveFileComponent} from "./move-file/move-file.component";
 import { EditFormComponent } from './edit-form/edit-form.component';
+
 
 
 @NgModule({
@@ -40,7 +42,8 @@ import { EditFormComponent } from './edit-form/edit-form.component';
     ShareFormComponent,
     FoldersComponent,
     FolderFormComponent,
-    PreviewFileComponent
+    PreviewFileComponent,
+    MoveFileComponent
   ],
   imports: [
     BrowserModule,
