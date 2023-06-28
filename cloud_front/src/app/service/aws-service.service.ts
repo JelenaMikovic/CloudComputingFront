@@ -130,7 +130,8 @@ export class AwsServiceService {
   public async downloadFile(file: File2): Promise<Observable<any>>  {
     console.log("POZVAN DOWNLOAD IZ AWS SERVISA")
     await this.getToken();
-    return this.http.get(this.endpoint + 'file/download/' + file.metadata.file, { headers: this.headers });
+    let filename = file.metadata.file.replace("/","-");
+    return this.http.get(this.endpoint + 'file/download/' + filename, { headers: this.headers });
   }
 
   public async shareFile(file_path: string, usernames: string[]): Promise<Observable<any>> {
