@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {DownloadFile, File} from '../model/files';
 import {MoveFileComponent} from "../move-file/move-file.component";
 import { EditFormComponent } from '../edit-form/edit-form.component';
+import { ShareFormComponent } from '../share-form/share-form.component';
 
 @Component({
   selector: 'app-upload-form',
@@ -54,6 +55,15 @@ export class PreviewFileComponent implements OnInit {
       file: this.file
     };
     const modalDialog = this.matDialog.open(MoveFileComponent, dialogConfig);
+  }
+
+  shareFile() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '450px';
+    dialogConfig.data = {type: "file", name: this.file, share: true};
+    const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
+
+    console.log(modalDialog);
   }
 
   base64ToBlob(base64String: string, contentType: string): Blob {

@@ -174,7 +174,7 @@ export class MainPageComponent {
   openShareForm(file: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '450px';
-    dialogConfig.data = {type: "file", name: file, share: true};
+    dialogConfig.data = {type: "file", name: this.selectedFile, share: true};
     const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
 
     console.log(modalDialog);
