@@ -1,14 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AwsServiceService } from '../service/aws-service.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar'; 
-import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { AuthService, IUser } from '../service/auth/auth.service';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { File } from '../model/files';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AwsServiceService} from '../service/aws-service.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
+import {DownloadFile, File} from '../model/files';
+import {MoveFileComponent} from "../move-file/move-file.component";
 
 @Component({
   selector: 'app-upload-form',
@@ -17,10 +13,10 @@ import { File } from '../model/files';
 })
 
 export class PreviewFileComponent implements OnInit {
-  
+
   file!: File;
 
-  constructor(private router: Router, private awsService: AwsServiceService, 
+  constructor(private matDialog: MatDialog,private router: Router, private awsService: AwsServiceService,
     private snackBar: MatSnackBar,) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
@@ -42,11 +38,17 @@ export class PreviewFileComponent implements OnInit {
     }
     const blob = new Blob([uint8Array], { type: contentType });
     const blobUrl = URL.createObjectURL(blob);
-  
+
     const embedElement = document.getElementById('pdfEmbed');
     if (embedElement instanceof HTMLObjectElement) {
       embedElement.data = blobUrl;
     }
+  }
+
+  openMoveForm() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "450px";
+    const modalDialog = this.matDialog.open(MoveFileComponent, dialogConfig);
   }
 
   base64ToBlob(base64String: string, contentType: string): Blob {
@@ -90,5 +92,30 @@ export class PreviewFileComponent implements OnInit {
         });
       }
     );
+    }
+
+    async downloadFile(){
+      this.snackBar.open('File downloaded KLSLJSSJ', 'Close', {
+        duration: 3000
+      });
+      (await this.awsService.downloadFile(this.file)).subscribe(
+        (response: DownloadFile) => {
+          console.log(response);
+          console.log('Uso u preuzimanje');
+          const url = response.url;
+          const link = document.createElement('a');
+          link.href = url;
+          // @ts-ignore
+          link.download = this.file.metadata.file.split('/').pop();
+          link.target = '_blank';
+          link.click();
+        },
+        (error: any) => {
+          console.error('Failed to download file:', error);
+          this.snackBar.open('Failed to download file', 'Close', {
+            duration: 3000
+          });
+        }
+      );
     }
 }

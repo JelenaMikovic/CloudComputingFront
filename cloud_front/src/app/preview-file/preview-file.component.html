@@ -8,21 +8,21 @@
                     <img [src]="getBase64(file.content, file.metadata.type)" alt="Image" style="max-width: 700px; max-height: 500px;">
                 </div>
             </ng-container>
-            
+
             <!-- PDF -->
             <ng-container *ngIf="file.metadata.type === 'application/pdf'">
                 <div style="display: flex; justify-content: center; align-items: center; margin-top: 40px;">
                   <embed id="pdfEmbed" style="width: 100%; height: 500px;">
                 </div>
               </ng-container>
-            
+
             <!-- Text -->
             <ng-container *ngIf="file.metadata.type.split('/')[1] === 'plain'">
                 <div style="display: flex; justify-content: center; align-items: center; margin-top: 40px;">
                     <ngx-extended-pdf-viewer [src]="getBase64(file.content.substr(2, file.content.length - 3), file.metadata.type)"></ngx-extended-pdf-viewer>
                 </div>
             </ng-container>
-            
+
             <!-- Video -->
             <ng-container *ngIf="file.metadata.type.split('/')[0] === 'video'">
                 <video controls>
@@ -40,12 +40,12 @@
                     <div class="dropdown-content">
                         <a href="#" class="butt" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i> Edit</a>
                         <a class="butt" title="Delete" data-toggle="tooltip"><i class="material-icons" (click)="deleteFile()">&#xE872;</i> Delete</a>
-                        <a href="#" class="butt" title="Download" data-toggle="tooltip"><i class="material-icons">&#xf090;</i> Download</a>
+                        <a href="#" class="butt" title="Download" data-toggle="tooltip" (click)="downloadFile()"><i class="material-icons">&#xf090;</i> Download</a>
                         <a href="#" class="butt" title="Share" data-toggle="tooltip"><i class="material-icons">&#xe80d;</i> Share</a>
-                        <a href="#" class="butt" title="Move file" data-toggle="tooltip"><i class="material-icons">&#xe675;</i> Move file</a>
+                        <a href="#" class="butt" title="Move file" data-toggle="tooltip" (click)="openMoveForm()"><i class="material-icons">&#xe675;</i> Move file</a>
                     </div>
                   </div>
-                
+
             </div>
             <div class="row"><hr/></div>
             <div class="row" >
@@ -55,23 +55,23 @@
             <div class="row">
                 <p class="col-sm-5">Name:</p>
                 <p class="col-sm-6">{{file.metadata.file.split('/').pop()}}</p>
-            </div> 
+            </div>
             <div class="row">
                 <p class="col-sm-5">Type:</p>
                 <p class="col-sm-6">{{file.metadata.type}}</p>
-            </div> 
+            </div>
             <div class="row">
                 <p class="col-sm-5">Size:</p>
                 <p class="col-sm-6">{{file.metadata.size}}</p>
-            </div> 
+            </div>
             <div class="row">
                 <p class="col-sm-5">Folder:</p>
                 <p class="col-sm-6">{{ (file.metadata.file.split('/').slice(1, -1).join('/') || 'All files') }}</p>
-            </div> 
+            </div>
             <div class="row">
                 <p class="col-sm-5">Last modifed:</p>
                 <p class="col-sm-6">{{file.metadata.lastModified}}</p>
-            </div> 
+            </div>
             <div class="row" >
                 <h1 class="col-sm-4 general">Sharing</h1>
                 <hr class="col-sm-6 devider" />
@@ -79,7 +79,7 @@
             <div class="row">
                 <p class="col-sm-5">Owner:</p>
                 <p class="col-sm-6">You</p>
-            </div> 
+            </div>
             <div class="row">
                 <p class="col-sm-5">View:</p>
                 <p class="col-sm-6">Noa</p>

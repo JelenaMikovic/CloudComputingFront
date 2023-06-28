@@ -5,7 +5,7 @@ export interface FilesResponse{
 export interface File{
     content: string,
     metadata: Metadata,
-    icon?: string 
+    icon?: string
 }
 
 export interface Metadata{
@@ -16,4 +16,8 @@ export interface Metadata{
     sharedWith: string[],
     tags: string[],
     type: string
+}
+
+export interface DownloadFile {
+  url: string;
 }
