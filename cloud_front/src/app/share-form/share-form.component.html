@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Share with your friends</h1>
+<mat-dialog-content>
+    <form [formGroup]="shareFileGroup">
+        <mat-form-field class="example-chip-list" appearance="fill">
+          <mat-label>Share with</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter usernames">
+            <mat-chip-row *ngFor="let username of usernames"
+                          (removed)="remove(username)"
+                          [editable]="true"
+                          (edited)="edit(username, $event)"
+                          [aria-description]="'press enter to edit ' + username">
+              {{username}}
+              <button matChipRemove [attr.aria-label]="'remove ' + username">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input placeholder="Username to share with"
+                    formControlName="usernames"
+                   [matChipInputFor]="chipGrid"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)"/>
+          </mat-chip-grid>
+        </mat-form-field>  
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Close</button>
+    <button mat-button type="submit" (click)="share()">Submit</button>
+</mat-dialog-actions>

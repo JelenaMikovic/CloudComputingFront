@@ -1,0 +1,16 @@
+<div id = "navbar">
+    <span [routerLink]="['/login']" id = "logo">
+        <img title="DataHive" src="assets/logo.png" class="img-fluid">
+        <span id="name">DataHive</span>
+      </span>
+    <span id="navigation">
+      <ul>
+        <li><a id = "loginButton" routerLinkActive="active" [routerLink]="['/login']" *ngIf="!isAuthenticated()">LOGIN</a></li>
+            <li><a id = "registerButton" routerLinkActive="active" [routerLink]="['/registration']" *ngIf="!isAuthenticated()">REGISTER</a></li>
+            <li><a id = "registerByInviteButton" routerLinkActive="active" [routerLink]="['/register-by-invite']" *ngIf="!isAuthenticated()">REGISTER BY INVITE</a></li>
+            <li><a id = "homeButton" routerLinkActive="active" [routerLink]="['/all']" *ngIf="isAuthenticated()">HOME</a></li>
+            <li><a id = "logoutButton" [routerLink]="" (click)="signOut()" *ngIf="isAuthenticated()">LOGOUT</a></li>
+      </ul>
+    </span>
+</div>
+  

@@ -1,0 +1,133 @@
+
+hr {
+    width: 85%;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.container {
+    margin-top: 60px;
+}
+.title {
+    font-family: "Poppins";
+    font-weight: lighter;
+    text-align: left;
+    letter-spacing: 5px;
+    font-size: 2.4rem;
+    margin: 1rem;
+}
+
+.header {
+    display: flex;
+    width: 85%;
+    margin: auto;
+    justify-content: space-between;
+}
+#gallery {
+    width: 85%;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 88px);
+    grid-auto-rows: 140px;
+    justify-content: center;
+    gap: 1rem;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #ece0b7;
+    transition: 0.5s filter;
+}
+
+.add {
+    object-fit: none;
+}
+
+h2 {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    visibility: hidden;
+    font-size: 18px;
+    font-family: "Poppins";
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #f9f9f9;
+  }
+
+.gallery_item {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    grid-column: span 2;
+    height: 190px;
+    position: relative;
+}
+
+.gallery_item:hover img{
+    filter: brightness(0.6);
+}
+
+.gallery_item:hover h2 {
+    visibility: visible;
+}
+.gallery_item:first-of-type {
+    grid-column: 2 / span 2;
+}
+
+@media screen and (min-width: 270px) and (max-width: 415px) {
+    .gallery_item:first-of-type {
+        grid-column: 1 / span 2;
+    }
+
+    #gallery {
+        grid-auto-rows: 190px;
+    }
+}
+
+@media screen and (min-width: 416px) and (max-width: 515px) {
+    .gallery_item:nth-of-type(odd) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 516px) and (max-width: 594px) {
+    .gallery_item:nth-of-type(3n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 595px) and (max-width: 768px) {
+    .gallery_item:nth-of-type(4n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 990px) {
+    .gallery_item:nth-of-type(5n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 991px) and (max-width: 1099px) {
+    .gallery_item:nth-of-type(6n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1199px) {
+    .gallery_item:nth-of-type(7n + 1) {
+        grid-column: 2 / span 2;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .gallery_item:nth-of-type(8n + 1) {
+        grid-column: 2 / span 2;
+    }
+}

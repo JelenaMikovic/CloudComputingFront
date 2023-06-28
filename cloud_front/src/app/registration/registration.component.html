@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="col-sm-6 mottos">
+        <div class="row">
+            <br>
+            <p class="motto">Don't get lost in the swarm - store your files safely in our hive.</p>
+        </div>
+        <div class="row">
+            <p>Our drive app offers secure and convenient file storage that's easy to use. Keep your files organized
+                and accessible from anywhere. Join today and never lose a file again</p>
+        </div>
+        <div class="row">
+            <img src="..\..\assets\beehive.png">
+        </div>
+    </div>
+    <div class="col-sm-6 line">
+        <div class="row form">
+            <br>
+            <p class="sign-up">Sign up for DataHive</p>
+        </div>
+        <form (ngSubmit)="registerUser()" [formGroup]="registerForm">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">First name</span>
+                        <input type="text" placeholder="Bob" formControlName="firstName">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-box">
+                        <span class="details">Last name</span>
+                        <input type="text" placeholder="Ross" formControlName="lastName">
+                    </div>
+                </div>
+            </div>
+            <div class="row form">
+                <div class="input-box">
+                    <span class="details">Birth date</span>
+                    <input type="date" formControlName="birthDate" placeholder="12.02.1988."  id="date-input" required>
+                </div>
+            </div>
+            <div class="row form">
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    <input type="text" placeholder="BobRoss1" formControlName="username">
+                </div>
+            </div>
+            <div class="row form">
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    <input type="email" placeholder="bob@mail.com" formControlName="email" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">Password</span>
+                        <input type="password" placeholder="********" formControlName="password" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-box form">
+                        <span class="details">Repeat password</span>
+                        <input type="password" placeholder="********" formControlName="repeatPassword" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="button">
+                    <input type="submit" value="Register">
+                </div>
+            </div>
+        </form>
+        <form (ngSubmit)="confirm()" [formGroup]="verificationCodeForm" *ngIf="showCode">
+            <div class="row" >
+                <div class="input-box form">
+                    <span class="details">Verification code:</span>
+                    <input type="text" placeholder="123456" formControlName="verificationCode" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="button" >
+                    <input type="submit" value="Verify">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

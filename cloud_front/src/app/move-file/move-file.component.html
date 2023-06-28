@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Move file</h1>
+<mat-dialog-content>
+  <form [formGroup]="moveFileGroup">
+    <mat-form-field>
+      <mat-label>New file path</mat-label>
+      <input matInput formControlName="newpath" type="text" width="100%">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Close</button>
+  <button mat-button type="submit" (click)="changeFilePath()">Submit</button>
+</mat-dialog-actions>
