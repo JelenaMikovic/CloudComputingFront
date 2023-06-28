@@ -85,6 +85,10 @@ export class FoldersComponent implements OnChanges {
 
     this.rightClickMenuItems = [
       {
+        menuText: 'Share with',
+        menuEvent: album,
+      },
+      {
         menuText: 'Delete',
         menuEvent: album,
       },

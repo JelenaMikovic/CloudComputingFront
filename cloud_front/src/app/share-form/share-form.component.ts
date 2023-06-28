@@ -16,6 +16,9 @@ export class ShareFormComponent implements OnInit {
   loading: boolean;
   user: IUser;
   shareFileGroup: FormGroup
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  usernames: string[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ShareFormComponent>,
@@ -39,7 +42,7 @@ export class ShareFormComponent implements OnInit {
       this.user = user.attributes;
     });
     if (this.data.type === "file") {
-      this.shareFileGroup.value.usernames = this.data.sharedWith;
+      this.usernames = this.data.sharedWith;
     } else {
       this.getFoldersSharedWith();
     }
@@ -49,7 +52,7 @@ export class ShareFormComponent implements OnInit {
     res.subscribe({
       next: (response) => {
         console.log(response)
-        this.shareFileGroup.value.usernames = response;
+        this.usernames = response;
       },
       error: (error) => {
         this.snackBar.open('Error sharing folder', '', {
@@ -72,12 +75,6 @@ export class ShareFormComponent implements OnInit {
         this.loading = false;
       });
   }
-
-  
-
-  addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  usernames: string[] = [];
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -124,34 +121,34 @@ export class ShareFormComponent implements OnInit {
         console.log('Valid');
         console.log(this.shareFileGroup.value.usernames);
         if (this.data.type === 'file'){
-          this.shareFile(usernames);
+          this.shareFile(this.usernames);
         }
         else {
-          this.shareFolder(usernames);
+          this.shareFolder(this.usernames);
         }
       }
     }
   }
   async shareFile(usernames: any) {
-    const res = await this.awsService.shareFolder(this.data, usernames);
+    const res = await this.awsService.shareFile(this.data.name, usernames);
     res.subscribe({
       next: (response) => {
-        console.log('Folder shared successfully');
+        console.log('File shared successfully');
         this.closeDialog();
-        this.snackBar.open('Folder shared successfully!', '', {
+        this.snackBar.open('File shared successfully!', '', {
           duration: 2000,
         });
       },
       error: (error) => {
-        this.snackBar.open('Error sharing folder', '', {
+        this.snackBar.open('Error sharing file', '', {
           duration: 2000,
         });
-        console.log('Error sharing folder:', error);
+        console.log('Error sharing file:', error);
       },
     });
   }
   async shareFolder(usernames: string[]) {
-    const res = await this.awsService.shareFolder(this.data, usernames);
+    const res = await this.awsService.shareFolder(this.data.name, usernames);
     res.subscribe({
       next: (response) => {
         console.log('Folder shared successfully');

@@ -66,37 +66,37 @@ export class MainPageComponent {
 
     let response;
 
-    if (this.title === 'Shared') {
-      response = await this.service.getFiles(this.title);
-    } else {
-      response = await this.service.getFiles(this.router.url.substring(1));
-    }
+    // if (this.title === 'Shared') {
+    //   response = await this.service.getFiles(this.title);
+    // } else {
+    //   response = await this.service.getFiles(this.router.url.substring(1));
+    // }
 
-    response.subscribe({
-      next: (res) => {
-        this.files = res.files;
-        for (let file of this.files) {
-          if (file.metadata.type === 'image/jpeg') {
-            const dataURI = `data:image/jpeg;base64,${file.content.substring(
-              2,
-              file.content.length - 1
-            )}`;
-            file.icon = dataURI;
-          } else if (file.metadata.type === 'image/png') {
-            const dataURI = `data:image/png;base64,${file.content.substring(
-              2,
-              file.content.length - 1
-            )}`;
-            file.icon = dataURI;
-          } else if (file.metadata.type === 'text/plain') {
-            file.icon = 'assets/txt-icon.png';
-          } else if (file.metadata.type === 'application/pdf') {
-            file.icon = 'assets/pdf-icon.png';
-          }
-        }
-      },
-      error: (error) => {},
-    });
+    // response.subscribe({
+    //   next: (res) => {
+    //     this.files = res.files;
+    //     for (let file of this.files) {
+    //       if (file.metadata.type === 'image/jpeg') {
+    //         const dataURI = `data:image/jpeg;base64,${file.content.substring(
+    //           2,
+    //           file.content.length - 1
+    //         )}`;
+    //         file.icon = dataURI;
+    //       } else if (file.metadata.type === 'image/png') {
+    //         const dataURI = `data:image/png;base64,${file.content.substring(
+    //           2,
+    //           file.content.length - 1
+    //         )}`;
+    //         file.icon = dataURI;
+    //       } else if (file.metadata.type === 'text/plain') {
+    //         file.icon = 'assets/txt-icon.png';
+    //       } else if (file.metadata.type === 'application/pdf') {
+    //         file.icon = 'assets/pdf-icon.png';
+    //       }
+    //     }
+    //   },
+    //   error: (error) => {},
+    // });
   }
 
   ngOnDeystroy() {
