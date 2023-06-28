@@ -132,7 +132,6 @@ export class AwsServiceService {
     return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }
 
-
   public async shareFile(file_path: string, usernames: string[]): Promise<Observable<any>> {
     await this.getToken();
     const requestBody = {
@@ -155,5 +154,10 @@ export class AwsServiceService {
     await this.getToken();
     const path = file.replace(/\//g, "-")
     return this.http.get(this.endpoint + 'folder/share/' + path, { headers: this.headers });
+  }
+  public async processInvite(path: string): Promise<Observable<any>>  {
+    await this.getToken();
+    console.log(this.headers);
+    return this.http.put(this.endpoint + 'invite/' + path, null,{ headers: this.headers });
   }
 }

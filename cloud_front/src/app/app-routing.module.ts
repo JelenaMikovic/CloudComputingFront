@@ -7,9 +7,13 @@ import { LoginGuard } from 'src/guard/LoginGuard';
 import { NotLoggedInGuard } from 'src/guard/NotLoggedInGuard';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { InvireRegisterComponent } from './invire-register/invire-register.component';
+import { AcceptInviteComponent } from './accept-invite/accept-invite.component';
+import { DenyInviteComponent } from './deny-invite/deny-invite.component';
 
 
 const routes: Routes = [
+  { path: 'accept', component: AcceptInviteComponent, canActivate: [NotLoggedInGuard]},
+  { path: 'deny', component: DenyInviteComponent, canActivate: [NotLoggedInGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard] },
   { path: 'register-by-invite', component: InvireRegisterComponent, canActivate: [LoginGuard] },
   { path: 'all', component: MainPageComponent, canActivate: [NotLoggedInGuard], children: [

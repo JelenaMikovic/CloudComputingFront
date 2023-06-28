@@ -27,6 +27,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import {MoveFileComponent} from "./move-file/move-file.component";
 import { EditFormComponent } from './edit-form/edit-form.component';
 import { InvireRegisterComponent } from './invire-register/invire-register.component';
+import { AcceptInviteComponent } from './accept-invite/accept-invite.component';
+import { DenyInviteComponent } from './deny-invite/deny-invite.component';
 
 
 
@@ -46,6 +48,8 @@ import { InvireRegisterComponent } from './invire-register/invire-register.compo
     PreviewFileComponent,
     InvireRegisterComponent,
     MoveFileComponent,
+    AcceptInviteComponent,
+    DenyInviteComponent,
   ],
   imports: [
     BrowserModule,
