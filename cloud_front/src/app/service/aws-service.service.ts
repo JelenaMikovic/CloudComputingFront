@@ -114,6 +114,15 @@ export class AwsServiceService {
     return this.http.put(this.endpoint + 'file/', requestBody, { headers: this.headers });
   }
 
+  public async moveFile(move: string, file_path: string): Promise<Observable<any>> {
+    await this.getToken();
+    const requestBody = {
+      old_file_path: file_path,
+      new_file_path: move,
+    };
+    return this.http.put(this.endpoint + 'file/' + file_path, requestBody, {headers: this.headers});
+  }
+
   public async downloadFile(file: File2): Promise<Observable<any>>  {
     await this.getToken();
     return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
