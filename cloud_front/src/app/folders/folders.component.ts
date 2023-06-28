@@ -45,17 +45,16 @@ export class FoldersComponent implements OnChanges {
   }
   async ngOnInit() {
     console.log(this.folder);
-    // if (this.folder != "Shared") {
-    //   let response = await this.service.getAlbums(this.folder);
-    //   response.subscribe({
-    //     next: (res) => {
-    //       this.albums = res;
-    //       console.log(res);
-    //     },
-    //     error: (error) => {
-    //     }
-    //   })
-    // }
+    if (this.folder != 'Shared') {
+      let response = await this.service.getAlbums(this.folder);
+      response.subscribe({
+        next: (res) => {
+          this.albums = res;
+          console.log(res);
+        },
+        error: (error) => {},
+      });
+    }
   }
 
   public openUploadForm() {

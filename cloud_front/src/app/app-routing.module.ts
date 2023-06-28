@@ -12,8 +12,8 @@ import { DenyInviteComponent } from './deny-invite/deny-invite.component';
 
 
 const routes: Routes = [
-  { path: 'accept', component: AcceptInviteComponent},
-  { path: 'deny', component: DenyInviteComponent},
+  { path: 'accept', component: AcceptInviteComponent, canActivate: [NotLoggedInGuard]},
+  { path: 'deny', component: DenyInviteComponent, canActivate: [NotLoggedInGuard]},
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard] },
   { path: 'register-by-invite', component: InvireRegisterComponent, canActivate: [LoginGuard] },
   { path: 'all', component: MainPageComponent, canActivate: [NotLoggedInGuard], children: [

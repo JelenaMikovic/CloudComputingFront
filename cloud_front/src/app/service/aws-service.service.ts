@@ -157,6 +157,7 @@ export class AwsServiceService {
   }
   public async processInvite(path: string): Promise<Observable<any>>  {
     await this.getToken();
-    return this.http.put(this.endpoint + 'invite/' + path, { headers: this.headers });
+    console.log(this.headers);
+    return this.http.put(this.endpoint + 'invite/' + path, null,{ headers: this.headers });
   }
 }
