@@ -122,9 +122,9 @@ export class AwsServiceService {
     await this.getToken();
     const requestBody = {
       old_file_path: file_path,
-      new_file_path: move,
+      new_file_path: move
     };
-    return this.http.put(this.endpoint + 'file/' + file_path, requestBody, {headers: this.headers});
+    return this.http.put(this.endpoint + 'file/move', requestBody, {headers: this.headers});
   }
 
   public async downloadFile(file: File2): Promise<Observable<any>>  {
