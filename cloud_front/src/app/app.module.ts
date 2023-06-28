@@ -25,6 +25,7 @@ import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import {MoveFileComponent} from "./move-file/move-file.component";
 import { EditFormComponent } from './edit-form/edit-form.component';
+import { InvireRegisterComponent } from './invire-register/invire-register.component';
 
 
 
@@ -41,7 +42,8 @@ import { EditFormComponent } from './edit-form/edit-form.component';
     FoldersComponent,
     FolderFormComponent,
     PreviewFileComponent,
-    MoveFileComponent
+    InvireRegisterComponent,
+    MoveFileComponent,
   ],
   imports: [
     BrowserModule,
