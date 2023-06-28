@@ -131,4 +131,29 @@ export class AwsServiceService {
     await this.getToken();
     return this.http.get(this.endpoint + 'file/' + file.metadata.file, { headers: this.headers });
   }
+
+
+  public async shareFile(file_path: string, usernames: string[]): Promise<Observable<any>> {
+    await this.getToken();
+    const requestBody = {
+      file: file_path,
+      usernames: usernames
+    };
+    return this.http.post(this.endpoint + 'file/share', requestBody, { headers: this.headers });
+  }
+
+  public async shareFolder(folder: string, usernames: string[]): Promise<Observable<any>> {
+    await this.getToken();
+    const requestBody = {
+      folder: folder,
+      usernames: usernames
+    };
+    return this.http.post(this.endpoint + 'folder/share', requestBody, { headers: this.headers });
+  }
+
+  public async getAlbumsSharedWith(file: string): Promise<Observable<any>> {
+    await this.getToken();
+    const path = file.replace(/\//g, "-")
+    return this.http.get(this.endpoint + 'folder/share/' + path, { headers: this.headers });
+  }
 }

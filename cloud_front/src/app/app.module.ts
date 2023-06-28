@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { ShareFormComponent } from './share-form/share-form.component';
 import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
@@ -39,6 +40,7 @@ import { InvireRegisterComponent } from './invire-register/invire-register.compo
     EditFormComponent,
     LoginComponent,
     ContextMenuComponent,
+    ShareFormComponent,
     FoldersComponent,
     FolderFormComponent,
     PreviewFileComponent,
