@@ -5,17 +5,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {DownloadFile, File} from '../model/files';
 import {MoveFileComponent} from "../move-file/move-file.component";
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { AwsServiceService } from '../service/aws-service.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar'; 
-import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { AuthService, IUser } from '../service/auth/auth.service';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { File } from '../model/files';
 import { EditFormComponent } from '../edit-form/edit-form.component';
 
 @Component({
@@ -28,7 +17,7 @@ export class PreviewFileComponent implements OnInit {
 
   file!: File;
 
-  constructor(private matDialog: MatDialog, private router: Router, private awsService: AwsServiceService, 
+  constructor(private matDialog: MatDialog, private router: Router, private awsService: AwsServiceService,
     private snackBar: MatSnackBar,) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
@@ -131,7 +120,7 @@ export class PreviewFileComponent implements OnInit {
         }
       );
     }
-  
+
   editFile(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "450px";
