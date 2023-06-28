@@ -114,16 +114,18 @@ export class MainPageComponent {
     this.isDisplayContextMenu = true;
     this.selectedFile = file;
 
-    this.rightClickMenuItems = [
-      {
-        menuText: 'Share file',
-        menuEvent: file.metadata.file,
-      },
-      {
-        menuText: 'Delete',
-        menuEvent: 'Handle delete',
-      },
-    ];
+    if (this.title !== 'Shared'){
+      this.rightClickMenuItems = [
+        {
+          menuText: 'Share file',
+          menuEvent: file.metadata.file,
+        },
+        {
+          menuText: 'Delete',
+          menuEvent: 'Handle delete',
+        },
+      ];
+    }    
 
     this.rightClickMenuPositionX = event.clientX;
     this.rightClickMenuPositionY = event.clientY;
