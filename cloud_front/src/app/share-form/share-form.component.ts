@@ -42,7 +42,7 @@ export class ShareFormComponent implements OnInit {
       this.user = user.attributes;
     });
     if (this.data.type === "file") {
-      for (let i of this.data.name.sharedWith)
+      for (let i of this.data.name.metadata.sharedWith)
       {
         this.usernames.push(i);
       }
@@ -134,7 +134,7 @@ export class ShareFormComponent implements OnInit {
     }
   }
   async shareFile(usernames: any) {
-    const res = await this.awsService.shareFile(this.data.name.file, usernames);
+    const res = await this.awsService.shareFile(this.data.name.metadata.file, usernames);
     res.subscribe({
       next: (response) => {
         console.log('File shared successfully');
