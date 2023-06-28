@@ -29,7 +29,8 @@ export class LoginComponent {
       if (!password) {
         throw new Error('Password is required.');
       }
-      await this.authService.signIn(username, password);
+      let res = await this.authService.signIn(username, password);
+      console.log(res);
       console.log('User signed in successfully.');
       // alert('User signed in successfully.');
       this.router.navigate(['/all']);

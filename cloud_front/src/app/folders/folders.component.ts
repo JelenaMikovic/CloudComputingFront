@@ -1,29 +1,41 @@
-import { ChangeDetectorRef, Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { AwsServiceService } from '../service/aws-service.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FolderFormComponent } from '../folder-form/folder-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextMenuModel } from '../interfaces/ContextMenuModel';
 import { F } from '@angular/cdk/keycodes';
+import { ShareFormComponent } from '../share-form/share-form.component';
 
 @Component({
   selector: 'app-folders',
   templateUrl: './folders.component.html',
-  styleUrls: ['./folders.component.css']
+  styleUrls: ['./folders.component.css'],
 })
 export class FoldersComponent implements OnChanges {
-
   albums: string[] = [];
   menu: any;
-  @Input() folder: string = "all";
-
+  @Input() folder: string = 'all';
 
   isDisplayContextMenu: boolean = true;
   rightClickMenuItems: Array<ContextMenuModel> = [];
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
 
-  constructor(private matDialog: MatDialog, private service: AwsServiceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private matDialog: MatDialog,
+    private service: AwsServiceService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
   ngOnChanges(changes: SimpleChanges) {
     // Check if the 'reloadTrigger' input property has changed
     if (changes['folder']) {
@@ -48,7 +60,7 @@ export class FoldersComponent implements OnChanges {
 
   public openUploadForm() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "450px";
+    dialogConfig.width = '450px';
     dialogConfig.data = this.folder;
     const modalDialog = this.matDialog.open(FolderFormComponent, dialogConfig);
 
@@ -63,14 +75,20 @@ export class FoldersComponent implements OnChanges {
   }
 
   public openFolder(album: string) {
-    this.router.navigate([this.router.url + "/" + album]);
+    this.router.navigate([this.router.url + '/' + album]);
   }
 
-  displayContextMenu(event: { clientX: number; clientY: number; }, album: string) {
-
+  displayContextMenu(
+    event: { clientX: number; clientY: number },
+    album: string
+  ) {
     this.isDisplayContextMenu = true;
 
     this.rightClickMenuItems = [
+      {
+        menuText: 'Share with',
+        menuEvent: album,
+      },
       {
         menuText: 'Delete',
         menuEvent: album,
@@ -79,25 +97,39 @@ export class FoldersComponent implements OnChanges {
 
     this.rightClickMenuPositionX = event.clientX;
     this.rightClickMenuPositionY = event.clientY;
-
   }
 
   getRightClickMenuStyle() {
     return {
       position: 'fixed',
       left: `${this.rightClickMenuPositionX}px`,
-      top: `${this.rightClickMenuPositionY}px`
-    }
+      top: `${this.rightClickMenuPositionY}px`,
+    };
   }
 
-  handleMenuItemClick(event: { data: any; }) {
+  handleMenuItemClick(event: { data: any }) {
     switch (event.data) {
-      case this.rightClickMenuItems[0].menuEvent:
-        {
-          this.deleteAlbum(this.router.url + "/" + this.rightClickMenuItems[0].menuEvent);
-          break;
-        }
+      case this.rightClickMenuItems[0].menuEvent: {
+        this.shareAlbum(
+          this.router.url + '/' + this.rightClickMenuItems[0].menuEvent
+        );
+        break;
+      }
+      case this.rightClickMenuItems[1].menuEvent: {
+        this.deleteAlbum(
+          this.router.url + '/' + this.rightClickMenuItems[1].menuEvent
+        );
+        break;
+      }
     }
+  }
+  shareAlbum(album: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '450px';
+    dialogConfig.data = { type: 'folder', name: album, share: true };
+    const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
+
+    console.log(modalDialog);
   }
 
   async deleteAlbum(folder: string) {
@@ -108,9 +140,8 @@ export class FoldersComponent implements OnChanges {
         this.ngOnInit();
         this.router.navigate(['/', 'all']);
       },
-      error: (error) => {
-      }
-    })
+      error: (error) => {},
+    });
   }
 
   @HostListener('document:click')

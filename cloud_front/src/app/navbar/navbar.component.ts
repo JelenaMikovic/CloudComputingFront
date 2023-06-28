@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   public ngOnInit(): void {
     this.cognitoService.authenticationSubject.subscribe(
       (val) => {
-        console.log(val);
+        // console.log(val);
         this.isAuth = val;
       },
     );
@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   isAuthenticated(): boolean {
     this.cognitoService.authenticationSubject.subscribe(
       (val) => {
-        console.log(val);
+        // console.log(val);
         this.isAuth = val;
         return val;
       },
