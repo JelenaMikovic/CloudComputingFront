@@ -2,9 +2,10 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ContextMenuModel } from '../interfaces/ContextMenuModel';
+import { ShareFormComponent } from '../share-form/share-form.component';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AwsServiceService } from '../service/aws-service.service';
-import { File } from '../model/files';
+import { File, Metadata } from '../model/files';
 
 @Component({
   selector: 'app-main-page',
@@ -23,6 +24,18 @@ export class MainPageComponent {
   rightClickMenuItems: Array<ContextMenuModel> = [];
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
+  selectedFile: File = {
+    content: '',
+    metadata: {
+      size: 0,
+      file: '',
+      caption: '',
+      lastModified: 0,
+      sharedWith: [],
+      tags: [],
+      type: ''
+    }
+  };
 
   constructor(
     private matDialog: MatDialog,
@@ -99,11 +112,12 @@ export class MainPageComponent {
 
   displayContextMenu(event: { clientX: number; clientY: number }, file: File) {
     this.isDisplayContextMenu = true;
+    this.selectedFile = file;
 
     this.rightClickMenuItems = [
       {
         menuText: 'Share file',
-        menuEvent: 'Handle share',
+        menuEvent: file.metadata.file,
       },
       {
         menuText: 'Delete',
@@ -121,12 +135,13 @@ export class MainPageComponent {
       left: `${this.rightClickMenuPositionX}px`,
       top: `${this.rightClickMenuPositionY}px`,
     };
+
   }
 
   handleMenuItemClick(event: { data: any }) {
     switch (event.data) {
       case this.rightClickMenuItems[0].menuEvent:
-        console.log('To handle share');
+        this.openShareForm(this.rightClickMenuItems[0].menuEvent);
         break;
       case this.rightClickMenuItems[1].menuEvent:
         console.log('To handle delete');
@@ -146,10 +161,20 @@ export class MainPageComponent {
 
   openFileDetails(file: any) {
     this.router.navigate(['/file'], { state: { file } });
+
   }
 
   @HostListener('document:click')
   documentClick(): void {
     this.isDisplayContextMenu = false;
+  }
+
+  openShareForm(file: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '450px';
+    dialogConfig.data = {type: "file", name: file, share: true};
+    const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
+
+    console.log(modalDialog);
   }
 }
