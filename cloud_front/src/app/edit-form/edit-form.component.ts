@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AwsServiceService } from '../service/aws-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar'; 
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatChipEditedEvent, MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService, IUser } from '../service/auth/auth.service';
@@ -17,13 +17,13 @@ import { File as File2} from '../model/files'
 export class EditFormComponent implements OnInit {
   loading: boolean;
   user: IUser;
-  
+
   file!: File2;
 
   constructor(private router: Router,
     private dialogRef: MatDialogRef<EditFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private awsService: AwsServiceService, 
+    private awsService: AwsServiceService,
     private snackBar: MatSnackBar,
     private cognitoService: AuthService,
     private Router: Router
@@ -107,7 +107,7 @@ export class EditFormComponent implements OnInit {
       const formData = new FormData();
 
       let caption = this.uploadFileGroup.value.caption
-      if(caption.trim == "")
+      if(caption.trim() == "")
       {
         caption = this.file.metadata.caption
       }
@@ -116,7 +116,7 @@ export class EditFormComponent implements OnInit {
       {
         tags = this.file.metadata.tags
       }
-      
+
 
       // Send the POST request to your Lambda function
       const res = await this.awsService

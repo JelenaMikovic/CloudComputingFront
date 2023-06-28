@@ -33,7 +33,7 @@ export class MoveFileComponent implements OnInit{
   addOnBlur = true;
 
   moveFileGroup: FormGroup = new FormGroup({
-    caption: new FormControl('', [
+    newpath: new FormControl('', [
     ])
   });
   closeDialog() {
@@ -43,7 +43,7 @@ export class MoveFileComponent implements OnInit{
   foldername: string = "";
   public ngOnInit(): void {
     this.foldername = this.file.metadata.file.split('/').slice(1, -1).join('/');
-    console.log("NAPRAVLJEN JE MOVE FILE DIALOG");
+    //console.log("NAPRAVLJEN JE MOVE FILE DIALOG");
     this.cognitoService.getUser()
       .then((user: any) => {
         this.user = user.attributes;
@@ -52,8 +52,8 @@ export class MoveFileComponent implements OnInit{
 
   async changeFilePath() {
     if (this.moveFileGroup.valid) {
-      let newFilePath = this.moveFileGroup.value.newpath;
-      if(newFilePath.trim == "")
+      let newFilePath : string = this.moveFileGroup.value.newpath;
+      if(newFilePath.trim() == "")
       {
         newFilePath = this.file.metadata.file
       }
@@ -65,10 +65,11 @@ export class MoveFileComponent implements OnInit{
           console.log('File path changed successfully');
           //this.closeDialog();
           this.snackBar.open('File path changed successfully!', "", { duration: 2000 });
-          //this.router.navigate(['/all/' + newFilePath.split('/').slice(1, -1).join('/')]);
+          this.router.navigate(['/all/' + newFilePath.split('/').slice(1, -1).join('/')]);
         },
         (error) => {
           console.log('Error changing file path:', error);
+          this.closeDialog();
         }
       );
     }
