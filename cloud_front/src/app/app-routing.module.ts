@@ -6,10 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { LoginGuard } from 'src/guard/LoginGuard';
 import { NotLoggedInGuard } from 'src/guard/NotLoggedInGuard';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
+import { InvireRegisterComponent } from './invire-register/invire-register.component';
 
 
 const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [LoginGuard] },
+  { path: 'register-by-invite', component: InvireRegisterComponent, canActivate: [LoginGuard] },
   { path: 'all', component: MainPageComponent, canActivate: [NotLoggedInGuard], children: [
     { path: '', component: MainPageComponent },
     {

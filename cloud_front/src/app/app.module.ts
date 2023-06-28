@@ -24,6 +24,7 @@ import { FolderFormComponent } from './folder-form/folder-form.component';
 import { PreviewFileComponent } from './preview-file/preview-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { EditFormComponent } from './edit-form/edit-form.component';
+import { InvireRegisterComponent } from './invire-register/invire-register.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { EditFormComponent } from './edit-form/edit-form.component';
     ContextMenuComponent,
     FoldersComponent,
     FolderFormComponent,
-    PreviewFileComponent
+    PreviewFileComponent,
+    InvireRegisterComponent
   ],
   imports: [
     BrowserModule,

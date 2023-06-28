@@ -113,4 +113,8 @@ export class AwsServiceService {
     };
     return this.http.put(this.endpoint + 'file/', requestBody, { headers: this.headers });
   }
+
+  public async registerByInvite(requestBody: any): Promise<Observable<any>> {    
+    return this.http.post(this.endpoint + 'register-by-invite/', requestBody);
+  }
 }
