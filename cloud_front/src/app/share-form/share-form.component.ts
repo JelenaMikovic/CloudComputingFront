@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import { AwsServiceService } from '../service/aws-service.service';
 
 @Component({
   selector: 'app-share-form',
@@ -14,21 +15,48 @@ import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 export class ShareFormComponent implements OnInit {
   loading: boolean;
   user: IUser;
+  shareFileGroup: FormGroup
 
   constructor(
     private dialogRef: MatDialogRef<ShareFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    // private awsService: AwsServiceService,
+    private awsService: AwsServiceService,
     private snackBar: MatSnackBar,
     private cognitoService: AuthService
   ) {
     this.loading = false;
     this.user = {} as IUser;
+    this.shareFileGroup = new FormGroup({
+      usernames: new FormControl(
+        [],
+        [Validators.required, Validators.minLength(1)]
+      ),
+    });
   }
 
   public ngOnInit(): void {
     this.cognitoService.getUser().then((user: any) => {
       this.user = user.attributes;
+    });
+    if (this.data.type === "file") {
+      this.shareFileGroup.value.usernames = this.data.sharedWith;
+    } else {
+      this.getFoldersSharedWith();
+    }
+  }
+  async getFoldersSharedWith() {
+    const res = await this.awsService.getAlbumsSharedWith(this.data.name);
+    res.subscribe({
+      next: (response) => {
+        console.log(response)
+        this.shareFileGroup.value.usernames = response;
+      },
+      error: (error) => {
+        this.snackBar.open('Error sharing folder', '', {
+          duration: 2000,
+        });
+        console.log('Error sharing folder:', error);
+      },
     });
   }
 
@@ -45,11 +73,7 @@ export class ShareFormComponent implements OnInit {
       });
   }
 
-  shareFileGroup: FormGroup = new FormGroup({
-    usernames: new FormControl(
-      [], [Validators.required, Validators.minLength(1)]
-    ),
-  });
+  
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -91,17 +115,60 @@ export class ShareFormComponent implements OnInit {
     }
   }
 
-  shareFile() {
+  async share() {
     this.shareFileGroup.value.usernames = this.usernames;
     if (this.shareFileGroup.valid) {
       // Create a FormData object to send the file as the request body
-      if (this.shareFileGroup.valid) {
-        console.log("Valid");
+      const usernames = this.shareFileGroup.value.usernames;
+      if (this.shareFileGroup.valid && usernames) {
+        console.log('Valid');
         console.log(this.shareFileGroup.value.usernames);
+        if (this.data.type === 'file'){
+          this.shareFile(usernames);
+        }
+        else {
+          this.shareFolder(usernames);
+        }
       }
     }
   }
-
+  async shareFile(usernames: any) {
+    const res = await this.awsService.shareFolder(this.data, usernames);
+    res.subscribe({
+      next: (response) => {
+        console.log('Folder shared successfully');
+        this.closeDialog();
+        this.snackBar.open('Folder shared successfully!', '', {
+          duration: 2000,
+        });
+      },
+      error: (error) => {
+        this.snackBar.open('Error sharing folder', '', {
+          duration: 2000,
+        });
+        console.log('Error sharing folder:', error);
+      },
+    });
+  }
+  async shareFolder(usernames: string[]) {
+    const res = await this.awsService.shareFolder(this.data, usernames);
+    res.subscribe({
+      next: (response) => {
+        console.log('Folder shared successfully');
+        this.closeDialog();
+        this.snackBar.open('Folder shared successfully!', '', {
+          duration: 2000,
+        });
+      },
+      error: (error) => {
+        this.snackBar.open('Error sharing folder', '', {
+          duration: 2000,
+        });
+        console.log('Error sharing folder:', error);
+      },
+    });
+  }
+  
   closeDialog() {
     this.dialogRef.close('Pizza!');
   }

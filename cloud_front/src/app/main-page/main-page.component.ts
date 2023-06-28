@@ -5,7 +5,7 @@ import { ContextMenuModel } from '../interfaces/ContextMenuModel';
 import { ShareFormComponent } from '../share-form/share-form.component';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AwsServiceService } from '../service/aws-service.service';
-import { File } from '../model/files';
+import { File, Metadata } from '../model/files';
 
 @Component({
   selector: 'app-main-page',
@@ -24,6 +24,18 @@ export class MainPageComponent {
   rightClickMenuItems: Array<ContextMenuModel> = [];
   rightClickMenuPositionX: number = 0;
   rightClickMenuPositionY: number = 0;
+  selectedFile: File = {
+    content: '',
+    metadata: {
+      size: 0,
+      file: '',
+      caption: '',
+      lastModified: 0,
+      sharedWith: [],
+      tags: [],
+      type: ''
+    }
+  };
 
   constructor(
     private matDialog: MatDialog,
@@ -98,13 +110,14 @@ export class MainPageComponent {
     const modalDialog = this.matDialog.open(UploadFormComponent, dialogConfig);
   }
 
-  displayContextMenu(event: { clientX: number; clientY: number }) {
+  displayContextMenu(event: { clientX: number; clientY: number }, file: File) {
     this.isDisplayContextMenu = true;
+    this.selectedFile = file;
 
     this.rightClickMenuItems = [
       {
         menuText: 'Share file',
-        menuEvent: 'Handle share',
+        menuEvent: file.metadata.file,
       },
       {
         menuText: 'Delete',
@@ -128,7 +141,7 @@ export class MainPageComponent {
   handleMenuItemClick(event: { data: any }) {
     switch (event.data) {
       case this.rightClickMenuItems[0].menuEvent:
-        this.openShareForm();
+        this.openShareForm(this.rightClickMenuItems[0].menuEvent);
         break;
       case this.rightClickMenuItems[1].menuEvent:
         console.log('To handle delete');
@@ -156,10 +169,10 @@ export class MainPageComponent {
     this.isDisplayContextMenu = false;
   }
 
-  openShareForm() {
+  openShareForm(file: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '450px';
-
+    dialogConfig.data = {type: "file", name: file, share: true};
     const modalDialog = this.matDialog.open(ShareFormComponent, dialogConfig);
 
     console.log(modalDialog);
